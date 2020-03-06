@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{asymptote}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{pgffor}
+\usepackage{subfiles}
+\renewcommand{\familydefault}{\sfdefault}
+\setcounter{secnumdepth}{0}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\SL}{\text{SL}_2(\Z/p\Z)}
+\renewcommand{\P}{\mathbb P}
+\newcommand{\e}{\varepsilon}
+\newcommand{\ball}[2]{(#1-#2,\,#1+#2)}
+
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\emp}{\varnothing}
+\newcommand{\divides}{\,|\,}
+
+\newenvironment{solution}{\setcounter{lemmas}{0}
+	\begin{proof}[Solution]}{\end{proof}}
+
+\newcounter{thms}
+
+\newenvironment{remark}{\emph{Remark.}}{}
+
+\setcounter{section}{-1}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+% Some typical argument abuse
+\newcounter{exercises}[section]
+\newtheorem{innercustomthm}{E}
+
+\makeatletter
+\newenvironment{exercise}[1][\@nil]
+    {\def\tmp{#1}
+    \ifx\tmp\@nnil
+        \refstepcounter{exercises}
+    \else
+        \setcounter{exercises}{#1}
+    \fi
+    \renewcommand\theinnercustomthm{\theexercises}\innercustomthm}
+    {\endinnercustomthm}
+\makeatother

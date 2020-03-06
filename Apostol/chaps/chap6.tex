@@ -1,0 +1,187 @@
+\begin{exercise}[2]
+Let $G$ be a finite group of order $n$ with identity element $e.$ If $a_1,\ldots,a_n$ are $n$ elements of $G$ not necessarily distinct, prove that there are integers $p$ and $q$ with $1\le p\le q\le n$ such that $a_pa_{p+1}\cdots a_q=e.$
+\end{exercise}
+
+\begin{proof}
+This is an interesting generalization of the same problem I've seen more commonly written in $\Z/k\Z,$ where we have $k$ integers in some order and are asked to prove that some ordered subset sums to $0\pmod k.$ Anyways, let $S$ be the set of products
+\[S=\left\{\prod_{k=1}^La_k:1\le L\le n\right\}.\]
+We have two cases.
+
+If every element of $S$ is distinct, then $S$ provides a mapping from $L\in[1,n]$ to $G$ which is injective. Because both sets have $n$ elements, the mapping is bijective, so there is some $L_0\in[1,n]$ which hits $e\in G.$ Thus,
+\[\prod_{k=1}^{L_0}a_k=e,\]
+which gives a product as described in the question.
+
+Otherwise two elements of $S$ are the same. Suppose that $L=p$ and $L=q$ give the same product, and without loss of generality. $p\le q.$ Thus,
+\[\prod_{k=1}^pa_k=\prod_{k=1}^qa_k\implies e=\prod_{k=p+1}^qa_k,\]
+which also provides a product as described in the question.
+
+Having covered all cases, we are done here.
+\end{proof}
+
+\begin{exercise}[9]
+Let $G$ be a finite group of order $n.$ Prove that $n$ is odd if, and only if, each element of $G$ is a square. That is, for each $a$ in $G$ there is an element $b$ in $G$ such that $a=b^2.$
+\end{exercise}
+
+\begin{exercise}
+State and prove a generalization of Exercise 9 in which the condition ``$n$ is odd'' is replaced by ``$n$ is relatively prime to $k$'' for some $k\ge2.$
+\end{exercise}
+
+\begin{proof}
+The statement we prove is that $|G|$ is relatively prime to some integer $k\ge2$ if and only if each element of $G$ is a $k^{\text{th}}$ power. Letting $k=2$ recovers Exercise 9. The key to the proof is the mapping $\sigma$ which takes
+\[\sigma:a\in G\longmapsto a^k\in G.\]
+
+We begin by assuming that every element of $G$ is a $k^\text{th}$ power. This implies that $\sigma$ is surjective, and because it maps a set to itself, the mapping must also be bijective. Now, for any nonidentity element $a\in G,$ the fact that $\sigma$ is a bijection means that a cycle decomposition gives a value $\ell$ for which
+\[a=\sigma^\ell(a)=a^{k^\ell}.\]
+This means that $a^{k^\ell-1}=e,$ where $e$ is the identity. From this we see that the order of every nonidentity element $a\in G$ divides $k^\ell-1$ for some $\ell>0.$
+
+Now suppose for the sake of contradiction that $\gcd(|G|,k)>1,$ which implies that it has a prime factor $p$ dividing $|G|$ and $k.$ By Cauchy's Theorem, extract any element $a$ of order $p.$ However, we have just shown that the order of $a$ divides into $k^\ell-1$ for some $\ell>0,$ so $p$ divides into $k^\ell-1$ for some $\ell>0.$ Because $p\mid k$ already, this implies $p\mid-1,$ which is our desired contradiction.
+
+Next assume that $|G|$ is relatively prime to $k.$ We claim that $\sigma$ is injective. Indeed, suppose elements $a\ne b$ of $G$ satisfy
+\[a^k=\sigma(a)=\sigma(b)=b^k.\]
+This means that $\left(ab^{-1}\right)^k=e,$ so the order of $ab^{-1}$ divides $k$ while not being 1. Because the order of any element divides the order of the group, we see that the order of $ab^{-1}$ also divides $|G|,$ so this order divides $\gcd(|G|,k),$ implying that it is larger than 1, assumed false.
+
+Now, because $\sigma$ is injective, we see that $\sigma$ is also bijective because it maps a set to itself. This is enough to conclude that $\sigma$ is surjective, so it follows that every element $a\in G$ has some $b=\sigma^{-1}(a)\in G$ for which $b^k=a.$ Thus, every element of $G$ is a $k^\text{th}$ power, so we are done here.
+\end{proof}
+
+\begin{exercise}[13]
+Let $f_1,\ldots,f_m$ be the characters of a finite group $G$ of order $m,$ and let $a$ be the element of $G$ of order $n.$ Theorem 6.7 shows that each number $f_r(a)$ is an $n$th root of unity. Prove that every $n$th root of unity occurs equally often among the numbers $f_1(a),\,f_2(a),\,\ldots,\,f_,(a).$ [Hint: Evaluate the sum
+\[\sum_{r=1}^m\sum_{k=1}^nf_r\left(a^k\right)e^{-2i\pi ik/n}\]
+in two ways to determine the number of times $e^{2i\pi i/n}$ occurs.]
+\end{exercise}
+
+\begin{proof}
+The hint destroys this; we just do a typical finite Fourier transform. Fix an $n^\text{th}$ root of unity $\zeta.$ We compute
+\[S=\sum_{r=1}^m\sum_{k=1}^nf_r\left(a^k\right)\zeta^{-k}\]
+in two ways.
+
+Directly, we use the multiplicative nature of $f_r$ to deduce
+\[S=\sum_{r=1}^m\sum_{n=1}^n\left(\frac{f_r(a)}{\zeta}\right)^k=\sum_{r=1}^m\begin{cases}n & f_r(a)=\zeta\\0&\text{else}\end{cases}.\]
+However, this is
+\[S=n\sum_{r=1}^m{\mathbf1}_{f_r(a)=\zeta}=n|\{f_r:f_r(a)=\zeta\}|.\]
+
+On the other hand, switching the order of summation gives
+\[S=\sum_{k=1}^n\left(\zeta^{-k}\sum_{r=1}^mf_r\left(a^k\right)\right).\]
+We notice that by the standard orthogonality relation for characters,
+\[\sum_{r=1}^mf_r\left(a^k\right)=\sum_{r=1}^mf_r\left(a^k\right)\overline{f_r}(e)=\begin{cases}m & a^k=e \\ 0 & \text{else}\end{cases}=m\cdot\mathbf1_{a^k=e},\]
+where $e\in G$ is the identity. We note that because $a$ has order $n,$ $a^k=e$ if and only if $n\mid k.$ Over the given range for $k,$ this only occurs where $k=n,$ so we have
+\[S=\sum_{k=1}^n\zeta^{-k}\cdot m\cdot\mathbf1_{a^k=e}=\zeta^{-n}\cdot m=m.\]
+
+Combining our two evaluations of $S,$ we have that
+\[|\{f_r:f_r(a)=\zeta\}|=\frac mn,\]
+so we are done here.
+\end{proof}
+
+\begin{exercise}[15]
+Let $\chi$ be any nonprincipal character mod $k.$ Prove that for all integers $a<b$ we have
+\[\left|\sum_{n=a}^b\chi(n)\right|\le\frac12\phi(k).\]
+\end{exercise}
+
+\begin{proof}
+The key observation is that
+\[\sum_{n=0}^{k-1}\chi(n)=0.\]
+With this in mind, the statement follows from the intuition that what comes up must come down---going above $\frac12\phi(k)$ means that the sum does not have time to go back down again. Now, it suffices to consider the sum for
+\[\sum_{n=a}^b\chi(n)=\underbrace{\sum_{n=a}^{a\mod k-1}\chi(n)}_0+\sum_{n=a\mod k}^{b\mod k}\chi(n)+\underbrace{\sum_{n=b\mod k-1}^b\chi(n)}_0=\sum_{n=a\mod k}^{b\mod k}\chi(a).\]
+Here I am abusing notation in that sums that go backwards are negative. Nonetheless, $-0=0,$ so the identity holds. Notably, in our mapping $a\mapsto a\mod k$ and $b\mapsto b\mod k,$ we drop the condition that $a<b$ and allow the sum to move backwards.
+
+So suppose that $0\le a,\,b<k.$ We consider these two complement sums.
+\[S_1=\sum_{n=0}^{a-1}\chi(n)+\sum_{n=b+1}^{k-1}\chi(n)\quad\text{and}\quad S_2=\sum_{n=a}^b\chi(n).\]
+We know already that $S_1+S_2=0.$ Observe that this means $S_1=-S_2,$ so $|S_1|=|S_2|.$ However,
+\[2|S_2|=|S_1|+|S_2|=\left|\sum_{n=0}^{a-1}\chi(n)+\sum_{n=b+1}^{k-1}\chi(n)\right|+\left|\sum_{n=a}^b\chi(a)\right|\le\sum_{n=0}^k|\chi(n)|=\phi(k)\]
+because there are $\phi(k)$ nonzero terms, all with magnitude exactly 1. This means that
+\[\left|\sum_{n=a}^b\chi(n)\right|=|S_2|\le\frac12\phi(k),\]
+which is exactly what we wanted.
+\end{proof}
+
+\begin{exercise}
+If $\chi$ is a real-valued character mod $k$ then $\chi(n)=\pm1$ or 0 for each $n,$ so the sum
+\[S=\sum_{n=1}^kn\chi(n)\]
+is an integer. This exercise shows that $12S\equiv0\pmod k.$
+\begin{enumerate}[label=(\alph*)]
+    \item If $(a,k)=1$ prove that $a\chi(a)S\equiv S\pmod k.$
+    \item Write $k=2^\alpha q$ where $q$ is odd. Show that there is an integer $a$ with $(a,k)=1$ such that $a\equiv3\pmod{2^\alpha}$ and $a\equiv2\pmod q.$ Then use (a) to deduce that $12S\equiv0\pmod k.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Alright then, spoil all of the fun of problem-solving.
+\begin{enumerate}[label=(\alph*)]
+    \item Because $\chi$ is completely multiplicative, we note that
+    \[a\chi(a)S=\sum_{n=1}^kan\chi(a)\chi(n)=\sum_{n=1}^k(an)\chi(an).\]
+    However, we note that $n\mapsto an$ is a bijection in $(\Z/k\Z)^\times$ because $a\in(\Z/k\Z)^\times$ is a unit of a group. It follows that
+    \[\sum_{\substack{n=1\\(n,k)=1}}^kn\chi(n)\equiv\sum_{\substack{an=1\\(n,k)=1}}^k(an)\chi(an).\]
+    However, all of the terms with $(n,k)\ne1$ get zeroed out by $\chi,$ so
+    \[S=\sum_{n=1}^kn\chi(n)\equiv\sum_{n=1}^kan\chi(an)=a\chi(a)S\pmod k,\]
+    which is exactly what we wanted.
+    \item With the given construction, the problem is not hard. Observe that such $a$ satisfying the modular congruences exists by the Chinese Remainder Theorem because $\left(2^\alpha,q\right)=1.$ Note $a$ is relatively prime to $k$ Because it shares no common factors with $2^\alpha$---$\left(a,2^\alpha\right)=\left(3,2^\alpha\right)=1$---nor $q$---$(a,q)=(2,q)=1.$ Thus, we see $(a,k)\le(a,q)\left(a,2^\alpha\right)=1.$
+    
+    Now, with that said, we observe that because $\chi(a)\pm1,$
+    \[S\equiv a\chi(a)S\equiv\pm3S\pmod{2^{\alpha}}.\]
+    The $+1$ and $-1$ cases imply $2S\equiv0$ and $4S\equiv0,$ both of which imply that $12S\equiv0\pmod{2^\alpha}.$
+    
+    On the other hand, $\chi(a)=\pm1$ gives
+    \[S\equiv a\chi(a)S\equiv\pm2S\pmod q.\]
+    The $+1$ and $-1$ cases imply $S\equiv0$ and $3S\equiv0,$ both of which imply that $12S\equiv0\pmod q.$
+    
+    Thus, by the Chinese Remainder Theorem, $12S\equiv0\pmod k,$ so we are done here.
+\end{enumerate}
+Having completed both parts of the problem, we are done here.
+\end{proof}
+
+\begin{exercise}
+An arithmetical function $f$ is called \textit{periodic} mod $k$ if $k>0$ and $f(m)=f(n)$ whenever $m\equiv n\pmod k.$ The integer $k$ is called a \textit{period} of $f.$
+\begin{enumerate}[label=(\alph*)]
+    \item If $f$ is periodic mod $k,$ prove that $f$ has a smallest positive period $k_0$ and that $k_0\mid k.$
+    \item Let $f$ be periodic and completely multiplicative, and let $k$ be the smallest positive period of $f.$ Prove that $f(n)=0$ if $(n,k)>1.$ This shows that $f$ is a Dirichlet character mod $k.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+In essence, any completely multiplicative periodic arithmetical function is a character. That's a sentence.
+\begin{enumerate}[label=(\alph*)]
+    \item Let $S$ be the set of possible positive periods for $f.$ Note that $k\in S,$ so $S$ is nonempty, so well-ordering guarantees the existence of a smallest element $k_0.$ Now, to show $k_0\mid k,$ we use the division algorithm to extract $q\in\Z$ and $r\in[0,k)\cap\Z$ such that
+    \[k=k_0q+r.\]
+    Now observe that if $a\equiv b\pmod r,$ then $a=b+\ell r,$ so
+    \[f(a)=f(b+\ell r)=f\big(b+\ell k-(\ell q)k_0\big)=f(b)\]
+    because $f$ is periodic with period $k$ and $k_0\in S.$ It follows that $f$ also has period $r,$ but $r<k_0,$ so we cannot have $r\in S.$ Thus, $r$ cannot be a positive integer, so it follows that $r=0,$ so $k=k_0q,$ as desired.
+    \item We begin by showing that if $d\mid k,$ but $d>1,$ then $\chi(d)=0.$ Suppose that $d\mid k$ and $\chi(d)\ne0,$ and we claim that $f$ is periodic with period $\frac kd.$ Indeed, if $a\equiv b\pmod{k/d},$ then $a=b+\ell\cdot\frac kd.$ Thus,
+    \[\chi(a)\chi(d)=\chi(ad)=\chi(bd+\ell k)=\chi(bd)=\chi(b)\chi(d).\]
+    However, $\chi(d)\ne0,$ so cancellation gives $\chi(a)=\chi(b)$ as desired.
+    
+    The issue here is that $k$ is the smallest positive period, so if $d\mid k$ but $d>1$ so that $\frac kd<k,$ then it is a contradiction for $f$ to have period $\frac kd.$ Therefore, we must have $\chi(d)=0.$
+    
+    Now, for any $n\in\Z,$ if $(n,k)>1,$ then observe that $(n,k)\mid k$ while $(n,k)>1,$ so $\chi\big((n,k)\big)=0.$ Thus,
+    \[\chi(n)=\chi\big((n,k)\big)\chi\left(\frac n{(n,k)}\right)=0\cdot\chi\left(\frac n{(n,k)}\right)=0,\]
+    as desired.
+\end{enumerate}
+Having completed all parts of the problem, we are done here.
+\end{proof}
+
+\begin{exercise}
+\begin{enumerate}[label=(\alph*)]
+    \item Let $f$ be a Dirichlet character mod $k.$ If $k$ is squarefree, prove that $k$ is the smallest positive period of $f.$
+    \item Give an example of a Dirichlet character mod $k$ for which $k$ is not the smallest positive period of $f.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Philosophically, we're connecting the idea of ``minimality'' to characters.
+\begin{enumerate}[label=(\alph*)]
+    \item We show a bit stronger. We claim that if $f$ is a Dirichlet character mod $k,$ and the smallest positive period of $f$ is $\ell,$ then for each prime $p\mid k,$ we have $p\mid\ell.$ This implies the statement because if $k$ is squarefree, then
+    \[\gcd(k,\ell)=\prod_{p\mid k}\gcd(p,\ell)=\prod_{p\mid k}p=k,\]
+    so $k\mid\ell,$ so $k\ge\ell.$ Because $k$ is a working period, $k$ must in fact be the smallest positive period.
+    
+    Now for the proof. Suppose for the sake of contradiction there exists a prime $p\mid k$ but $p\nmid\ell.$ Let $k=p^\alpha b$ where $p\nmid b$ so that
+    \[\ell\mid k=p^\alpha b\implies \ell\mid\gcd\left(\ell,p^\alpha\right)b=b.\]
+    It follows that $f$ is periodic with period $b.$
+    
+    We now set a trap: Instantiate an integer $n$ for which
+    \[\begin{cases}n\equiv1\pmod b\\n\equiv0\pmod p,\end{cases}\]
+    which exists by the Chinese Remainder Theorem; note $\gcd(b,p)=1.$ However, this implies
+    \[0=f(p)f\left(\frac np\right)=f(n)=f\left(b\floor{\frac nb}+1\right)=f(1)=1\]
+    because $f(p)=0$ due to $f$ being a Dirichlet character mod $k$ and the periodic nature of $f$ mod $b.$ This is obviously a contradiction, so we are done.
+    \item Note that
+    \[f(x)=\begin{cases}1 & n\equiv1\pmod2\\0 & n\equiv0\pmod2\end{cases}\]
+    has smallest positive period 2, seen clearly by the conditions only caring about$\pmod2$ information. However, it works fine as a Dirichlet mod, say, 4 because it is still completely multiplicative and zeroes out any $f(x)$ for which $\gcd(x,4)\ge\gcd(x,2)>1.$
+\end{enumerate}
+Having completed both parts of the problem, we are done here.
+\end{proof}

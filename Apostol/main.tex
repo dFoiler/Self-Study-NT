@@ -1,0 +1,28 @@
+\input{pre.tex}
+% Remove section numbering
+\setcounter{secnumdepth}{0}
+
+\title{Exercises from Introduction to Analytic Number Theory}
+\author{Nir Elber}
+\date{2019--2020}
+
+\begin{document}
+
+\maketitle
+\section{Introduction}
+This document contains a record of my solutions to some of the exercises from Apostol's \href{http://dl.icdst.org/pdfs/files1/8dc80d73b142455012b6c7d87a2e3a0b.pdf}{\textit{Introduction to Analytic Number Theory}}. I start in chapter 2 because that's where the nonelementary mathematics begins to appear, and I try to cover as many exercises as I can stomach.
+
+\newpage
+\tableofcontents
+
+\newpage
+
+\foreach \n in {2,3,5,6}
+{
+    \section{Chapter \n}
+    \setcounter{exercises}{0}
+    \input{chaps/chap\n.tex}
+    \newpage
+}
+
+\end{document}

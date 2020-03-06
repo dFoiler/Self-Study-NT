@@ -1,0 +1,137 @@
+I'm already familiar with arithmetic in $\Z/n\Z,$ so I'll hit the highlights.
+
+\begin{exercise}[7]
+Prove the converse of Wilson's theorem: \textit{If $(n-1)!+1\equiv0\pmod n,$ then $n$ is prime if $n>1.$}
+\end{exercise}
+
+\begin{proof}
+Because $n>1,$ it has a prime factor. For now, let $n=pk$ so that
+\[pk\mid(pk-1)!+1=1+\prod_{\ell=1}^{pk-1}\ell.\]
+Now, notice that $1\le p\le pk-1$ is equivalent to stating $k\ge\frac{p+1}p=1+\frac1p.$
+
+Suppose for the sake of contradiction that $n$ is not prime so that $k>1$ implying $k\ge2\ge1+\frac1p.$ It follows that $p$ lives in the product, so
+\[p\mid(pk-1)!\implies p\nmid(pk-1)!+1,\]
+which is a problem. Thus, we are done here.
+\end{proof}
+
+Exercise 8 asks when $(p-1)!+1$ is a power of $p,$ which I got thoroughly stuck on even though it is quite easy. I present the solution for completeness even though it isn't entirely mine. If $(p-1)!+1=p^k,$ then write
+\[(p-2)!=\sum_{\ell=0}^{k-1}p^\ell\equiv k\pmod{p-1}.\]
+However, for $p-2>4,$ we have that $(p-2)!\equiv0\pmod{p-1},$ so $p-1\mid k,$ and $k\ge p-1.$ This is a problem because $(p-1)!<p^{p-1},$ so we must instead have $p\le6.$ This leaves $p=2,\,3,\,5$ all of which work.
+
+\begin{exercise}[10]
+If $p$ is odd, $p>1,$ prove that
+\[1^23^25^2\cdots(p-2)^2\equiv(-1)^{(p+1)/2}\pmod p\]
+and
+\[2^24^26^2\cdots(p-1)^2\equiv(-1)^{(p+1)/2}\pmod p.\]
+\end{exercise}
+
+\begin{proof}
+I might as well include one of the pair-off problems. The key observation is that we can use one of each factor as a $p-k$ to complete the factorial. Indeed,
+\[\prod_{k=1}^{(p-1)/2}(2k-1)^2\equiv(-1)^{(p-1)/2}\prod_{k=1}^{(p-1)/2}(2k-1)\prod_{k=1}^{(p-1)/2}(p-2k+1).\]
+The first product on the right-hand side covers all odds from $2k-1=1$ to $2k-1=p-2,$ and the second product covers all evens from $p-2k+1=p-1$ down to $p-2k+1=2.$ Thus, this product contains all the factors in $(p-1)!,$ and nothing more because there is a total of $(p-1)$ factors. Thus,
+\[\prod_{k=1}^{(p-1)/2}(2k-1)^2\equiv(-1)^{(p-1)/2}(p-1)!\equiv(-1)^{(p+1)/2}\pmod p,\]
+as desired.
+
+For the even product, notice that multiplying the two products in the problem gives
+\[1^22^23^24^2\cdots(p-2)^2(p-1)^2=(p-1)!^2\equiv(-1)^2\equiv1\pmod p.\]
+Dividing out the odds tells us that
+\[2^24^26^2\cdots(p-1)^2\equiv1\cdot1^{-(p+1)/2}\equiv(-1)^{(p+1)/2}\pmod p\]
+because $a\equiv-a\pmod 2.$ Thus, we are done here.
+\end{proof}
+
+\begin{exercise}[12]
+If $p$ is a prime, prove that
+\[\binom np\equiv\floor{\frac np}\pmod p.\]
+Also, if $p^\alpha\mid\floor{n/p}$ prove that
+\[p^\alpha\mid\binom np.\]
+\end{exercise}
+
+\begin{proof}
+We begin with the first statement. The key motivation is that we get a $p!$ in the denominator of $\binom np,$ which we want to make into $(p-1)!\equiv-1\pmod p.$ Note
+\[\binom np=\frac1{p!}\prod_{k=n-p+1}^nk.\]
+Observe that $p\floor{\frac np}=n-p\left\{\frac np\right\}\in[n-p+1,n]$ is in the product, so we remove it.
+\[\binom np=\frac p{p!}\floor{\frac np}\prod_{\substack{k=n-p+1\\k\ne p\floor{n/p}}}^nk=\floor{\frac np}\cdot\frac1{(p-1)!}\prod_{\substack{k=n-p+1\\k\ne p\floor{n/p}}}^nk.\tag{$*$}\]
+Now, the product contains a string of $p-1$ elements that all live in $[n-p+1,n],$ so they all have distinct residues$\pmod p$---if two had the same residue, then their absolute difference would be no more than $n-(n-p+1)=p-1$ while being divisible by $p,$ so the difference would be 0. However, none of the elements are divisible by $p$ because that forces the element to be $p\floor{n/p}.$ Thus, the factors make a permutation of $(\Z/p\Z)^\times,$ so their product is $(p-1)!$ in $\Z/p\Z.$ Thus,
+\[\binom np=\frac1{(p-1)!}\floor{\frac np}\cdot(p-1)!\equiv\floor{\frac np}\pmod p,\]
+which is exactly what we wanted.
+
+For the second statement, we note that the above arguments imply that the product does not contribute any powers of $p,$ and the factorial does not remove any; they're coprime factors. Thus,
+\[p^\alpha\mid\floor{\frac np}\cdot\frac1{(p-1)!}\prod_{\substack{k=n-p+1\\k\ne p\floor{n/p}}}^nk\iff p^\alpha\mid\floor{\frac np},\]
+which is the hypothesis, so we are done here.
+\end{proof}
+
+\begin{exercise}
+Let $a,b,n$ be positive integers such that $n$ divides $a^n-b^n.$ Prove that $n$ also divides $\left(a^n-b^n\right)/(a-b).$
+\end{exercise}
+
+\begin{proof}
+We use unique prime factorization to Chinese Remainder ourselves into a solution. Let
+\[n=\prod_pp^{\nu_p(n)}.\]
+Observe that all but finitely many of these factors can be ignored because $n$ is finite, so finitely many $\nu_p(n)$ are positive.
+
+Choose an arbitrary prime $p$ and let $n=mp^k$ where $p\nmid m.$ We want to show that $p^k\mid\frac{a^n-b^n}{a-b}.$ We are given
+\[a^n\equiv b^n\pmod n,\]
+so we have $a^n\equiv b^n\pmod{p^k}.$ If $p\mid a$ or $p\mid b,$ then note that $p$ divides both, so the quotient contains at least $n\min\{\nu_p(a),k\}$ factors of $p$ after factoring out, which is far more than $\nu_p(n)\ll n.$ Similarly, if $a\equiv b\pmod{p^k},$ then write
+\[\frac{a^n-b^n}{a-b}=\sum_{k=0}^na^kb^{n-k}\equiv\sum_{k=0}^na^n\equiv na^n\equiv0\pmod{p^k}.\]
+
+Else, $p$ divides neither $a,$ $b,$ nor $a-b.$ In this case, we notice that $p^k$ already divides $n$ divides $a^n-b^n,$ so because $a-b$ cannot remove any factors of $p,$ $p^k$ must indeed divide $\frac{a^n-b^n}{a-b}.$ Indeed,
+\[\nu_p\left(\frac{a^n-b^n}{a-b}\right)=\nu_p\left(a^n-b^n\right)-\underbrace{\nu_p(a-b)}_0\ge\nu_p(n),\]
+which is exactly what we wanted. Having covered all possible cases, we are done here.
+\end{proof}
+
+\begin{exercise}
+Let $a,b,$ and $x_0$ be positive integers and define
+\[x_n=ax_{n-1}+b\quad\text{ for }n=1,\,2,\,\ldots\]
+Prove that not all $x_n$ can be primes.
+\end{exercise}
+
+\begin{proof}
+By induction, it is not hard to see that
+\[x_n=a^nx_0+b\cdot\frac{a^n-1}{a-1}.\]
+Indeed, for $n=0,$ the statement reads $x_0=x_0,$ so the base case is easy. After that, assume $k$ so that
+\[x_{k+1}=ax_k+b=a^{k+1}x_0+ab\cdot\frac{a^n-1}{a-1}+b=a^{k+1}x_0+b\cdot\frac{a^{n+1}-a+a-1}{a-1},\]
+which is what we wanted after cancellation.
+
+Briefly, for $n\ge1,$ realize that we can write $x_n=a^{n-1}x_1+b\cdot\frac{a^{n-1}-1}{a-1}.$ Plugging in $x_1=ax_0+b$ and running the above algebraic manipulation confirms this.
+
+Now, notice that $x_1=ax_0+b\ge1+1>1,$ so $x_1$ has a prime factor, say $p.$ We have two cases.
+
+If $p\nmid a-1,$ then note that $p\mid a^{p-1}-1$ means that $p\mid\frac{a^{p-1}-1}{a-1}$ because the division by $a-1$ cannot remove powers of $p.$ Thus, note
+\[x_p=a^{p-1}x_1+b\cdot\frac{a^{p-1}-1}{a-1},\]
+is divisible by $p$ because both $x_1$ and the fraction are. Because $x_p>x_1>p$ because the sequence is increasing and $p>1,$ we conclude that $x_p$ cannot be prime.
+
+Otherwise, $p\mid a-1,$ so $a\equiv1\pmod p.$ In this case, observe that
+\[\frac{a^p-1}{a-1}=\sum_{k=0}^{p-1}a^k\equiv\sum_{k=0}^{p-1}1\equiv p\equiv0\pmod p,\]
+so we note
+\[x_{p+1}=a^px_1+b\cdot\frac{a^p-1}{a-1}\]
+is divisible by $p$ because both $x_1$ and the fraction are. Because $x_{p+1}>x_1>p$ because the sequence is increasing and $p+1>1,$ we conclude that $x_{p+1}$ cannot be prime.
+
+Having covered all cases, we have found a composite element of $\{x_n\}.$ With that said, we are done here.
+\end{proof}
+
+\begin{exercise}[20]
+Prove that for any positive integers $n$ and $k,$ there exists a set of $n$ consecutive integers such that each member of this set is divisible by $k$ distinct prime factors no one of which divides any other member of this set.
+\end{exercise}
+
+\begin{proof}
+This is a really silly problem. We remark that there are infinitely many primes, so there are infinitely many primes larger than $n.$ Extract $nk$ of these primes, and throw them into $\{p_{a,b}\}_{a=1,\,b=1}^{a=n,\,b=k}.$ Note each is relatively prime to each other, so extract some $N$ by the Chinese Remainder Theorem such that
+\[N\equiv-a\pmod{p_{a,b}}\text{ for each }b.\]
+Now, I claim the requested elements are $N+1,\,N+2,\,\ldots,\,N+n.$ Indeed, for any $a\in[1,n]\cap\Z,$ we have that
+\[N+a\equiv0\pmod{p_{a,b}}\text{ for any }b,\]
+which tallies $k$ distinct prime factors for any of the elements. To show no $p_{a,b}$ occurs twice, we note that each $p_{a,b}>n,$ but $\gcd(N+a_1,N+a_2)=\gcd(N+a_1,a_2-a_1)\le n,$ so we cannot have $p_{a,b}$ divide both.
+\end{proof}
+
+Briefly, exercise 19 constructs for Exercise 20 with the set $n!+k$ where $k$ ranges from 1 to $n.$ This works, in essence, because the greatest common divisor of any two of these elements is
+\[\gcd(n!+a,n!+b)=\gcd(n!+a,b-a)\le b-a\le n,\]
+and most of the $n!+k$ have a prime factor larger than $n.$
+
+Indeed, the only way that $n!+k$ has only prime factors less than or equal to $n$ is
+\[n!+k=\prod_{p<n}p^{\nu_p(n!+k)}.\]
+We know $k\mid n!,$ so $\nu_p(k)\le\nu_p(n!).$ If this is strict, then $\nu_p(n!+k)=\nu_p(k),$ so
+\[n!+k=\prod_{p<n}p^{\nu_p(n!+k)}=\prod_{p<n}p^{\nu_p(k)}=k,\]
+which is a contradiction because $n!>0.$ Thus, we are interested in the equality case when $\nu_p(k)=\nu_p(n!).$ This means that $k$ is the only number less than or equal to $n$ which is divisible by $p,$ else the other number would contribute to $\nu_p(n!).$ In particular, we see that $k=p$ as well as $n<2p.$ However, such edge cases only occur once in the set $n!+k,$ and the $n<2p$ bound implies that $p$ divides no other $n!+k,$ for that requires $p\mid k.$ In total, the prime extraction function is
+\[p(n!+k)=\begin{cases}
+    p & k=p\text{ and }n<2p \\
+    p & p\mid n!+k\text{ and }p>n
+\end{cases}.\]
+The above argument shows that these primes always exist.

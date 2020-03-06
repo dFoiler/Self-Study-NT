@@ -1,0 +1,587 @@
+\begin{exercise}[3]
+Prove that
+\[\frac n{\phi(n)}=\sum_{d\mid n}\frac{\mu^2(d)}{\phi(d)}.\]
+\end{exercise}
+
+\begin{proof}
+This solution is boring. Clearly the left-hand side is a multiplicative function because it is the quotient of two multiplicative functions, and the left-hand side is
+\[\frac{\mu^2}{\phi}*u\]
+and so is also multiplicative. Thus it suffices to show this for prime powers. Letting $n=p^k$ for $k>0,$
+\[\sum_{d\mid n}\frac{\mu^2(d)}{\phi(d)}=\sum_{\ell=0}^k\frac{\mu^2\left(p^\ell\right)}{\phi\left(p^\ell\right)}=\frac11+\frac1{p-1}=\frac p{p-1}=\frac{p^k}{p^k-p^{k-1}}=\frac n{\phi(n)}.\]
+Thus we are done here.
+\end{proof}
+
+I feel like there should be a way to use M\"obius inversion or something in the previous problem, but the standard method is surely fastest. I might think more about this later.
+
+\begin{exercise}[5]
+Define $v(1)=0,$ and for $n>0$ let $v(n)$ be the number of distinct prime factors of $n.$ Let $f=\mu*v$ and prove that $f(n)$ is either 0 or 1.
+\end{exercise}
+
+\begin{proof}
+We have
+\[f(n)=\sum_{d\mid n}\mu(d)v\left(\frac nd\right)\iff v(n)=\sum_{d\mid n}f(d).\]
+Observe that a prime-indicating function would work for $f,$ for it would increment 1 for each prime divisor of $n,$ counting the number of distinct prime factors. Now, because this $f$ satisfies the right-hand expression, M\"obius inversion tells us that it is the unique function satisfying the left-hand expression, so we have shown that $f$ is the prime indicator.
+
+Now, indicators are either 0 or 1, so we are done here.
+\end{proof}
+
+The above proof is unmotivated because seeing that it is a prime indicator is unmotivated. Honestly, I had an original proof which inducted on $v(n)$ from the initial expression from $f$ but found that the ``equality'' case when $f$ is 1 turned out to be an indicator.
+
+\begin{exercise}
+Prove that
+\[\sum_{d^2\mid n}\mu(d)=\mu^2(n),\]
+and, more generally,
+\[\sum_{d^k\mid n}\mu(d)=\begin{cases}0 & \text{if }m^k\mid n\text{ for some }m>1, \\ 1 & \text{otherwise.}\end{cases}\]
+The last sum is extended over all positive divisors $d$ of $n$ whose $k$th power also divide $n.$
+\end{exercise}
+
+\begin{proof}
+We tackle the general case directly. Define $n=a^kb$ where $b$ is divisible by no $k^\text{th}$ power of a prime. In particular, use unique prime factorization to write
+\[n=\prod_{\ell=1}^\infty p_\ell^{a_\ell}=\bigg(\underbrace{\prod_{\ell=1}^\infty p_\ell^{\floor{a_\ell/k}}}_a\bigg)^k\cdot\underbrace{\prod_{\ell=1}^\infty p_\ell^{a_\ell-k\floor{a_\ell/k}}}_b\]
+Now notice that if $d^k\mid n=a^kb,$ then we must have $d\mid a.$ Otherwise there exists a prime power $p^{\nu_p(d)}$ dividing $d$ which does not divide into $a$ (by unique prime factorization), so $\left(p^{\nu_p(d)-\nu_p(a)}\right)^k\ne1$ divides into $b,$ which is assumed false. Thus,
+\[\sum_{d^k\mid n}\mu(d)=\sum_{d\mid a}\mu(d)=\begin{cases}0 & a>1 \\ 1 & a=1\end{cases}.\]
+Observe that this is exactly what we wanted. Indeed, the sum is 0 if and only if $a>1,$ which holds if and only if there exists some $m^k\mid n$ with $m\ne1.$ (If some nontrivial $m^k\mid n,$ then $a\ge m,$ and if $a>1,$ then let $m=a.$) Otherwise the sum is 1, so we are done.
+\end{proof}
+
+\begin{exercise}
+Let $\mu(p,\,d)$ denote the value of the M\"obius function at the gcd of $p$ and $d.$ Prove that for every prime $p$ we have
+\[\sum_{d\mid n}\mu(d)\mu(p,\,d)=\begin{cases}1 &\text{if }n=1, \\
+2 & \text{if }n=p^a,\,a\ge1, \\
+0 & \text{otherwise}\end{cases}.\]
+\end{exercise}
+
+\begin{proof}
+Note that $\gcd(d,\,p)$ is 1 if $p\nmid d$ and $p$ otherwise, so $\mu(p,\,d)$ is 1 if $p\nmid d$ and $-1$ otherwise. Thus,
+\[\sum_{d\mid n}\mu(d)\mu(p,\,d)=\sum_{\substack{d\mid n\\p\nmid d}}\mu(d)+\sum_{\substack{d\mid n\\p\mid d}}-\mu(d).\]
+Now let $n=p^km$ where $p\nmid m.$ Note if $p\nmid d,$ then we have $d\mid p^km$ implies $d\mid m.$ Otherwise $p\mid d,$ but observe that if $p^2\mid d,$ then $\mu(d)=0,$ so the term doesn't matter. Thus, $p\nmid d/p,$ so $d/p\mid p^km$ implies $d/p\mid m.$ In this way we can write
+\[\sum_{d\mid n}\mu(d)\mu(p,\,d)=\sum_{d\mid m}\mu(d)+\sum_{d/p\mid m}\mu(d/p).\]
+
+To finish the problem, note that if $n=1,$ then $m=1,$ but the right-hand sum is in fact empty, so the left-hand sum is 1, and the entire function remains 1. If $n=p^a$ with $a\ge1,$ then $m$ remains 1, but now both sums are nonempty---there is some divisor $d$---and 1, giving 2. Otherwise, $m\ne1,$ so the M\"obius sums entirely vanish no matter if they are empty or not. This completes the problem.
+\end{proof}
+
+\begin{exercise}
+Prove that
+\[\sum_{d\mid n}\mu(d)\log^md=0\]
+if $m\ge1$ and $n$ has more than $m$ prime factors. [\textit{Hint:} Induction.]
+\end{exercise}
+
+\begin{proof}
+We extend the problem statement to $m=0,$ which we already know to be true because the M\"obius sum is 0 over all $n$ with a prime factor; i.e., all $n>1.$ We now proceed with induction on $m.$ Suppose that the statement holds for all $0\le m<M$ so that we aim to show it for $M.$ Suppose $N$ has at least $M$ distinct prime factors, so we let $N=p^kN'$ where $p\nmid N'.$ Observe $N'$ has at least $M-1$ distinct prime factors. Now,
+\[\sum_{d\mid N}\mu(d)\big(\log d\big)^M=\sum_{\substack{d\mid N\\p\mid d}}\mu(d)\big(\log d\big)^M+\sum_{\substack{d\mid N\\p\nmid d}}\mu(d)\big(\log d\big)^M.\]
+Briefly, note that if $p\mid d\mid N,$ then we can write $d=p^\ell d'$ where $d'\mid N'.$ However, if $\ell>1,$ then $\mu(d)=0,$ so it suffices to consider $d=pd'.$ And on the other hand, if $p\nmid d\mid N,$ then we simply have $d\mid N'.$ Thus, we have
+\[\sum_{d\mid N}\mu(d)\big(\log d\big)^M=\sum_{d\mid N'}\mu(pd)\big(\log(pd)\big)^M+\sum_{d\mid N'}\mu(d)\big(\log d\big)^M.\]
+However, we can expand the first sum with the binomial theorem as
+\[-\sum_{d\mid N'}\mu(d)\big(\log d+\log p\big)^M=-\sum_{d\mid N'}\mu(d)\big(\log d\big)^M-\sum_{k=0}^{M-1}\big(\log p\big)^{M-k}\sum_{d\mid N'}\mu(d)\big(\log d\big)^k.\]
+Because $N'$ has at least $M-1$ distinct prime factors, it has at least $k$ prime factors, so the inductive hypothesis turns each $\sum\mu(d)(\log d)^k$ into 0. Plugging in what we have left, we see
+\[\sum_{d\mid N}\mu(d)\big(\log d\big)^M=\sum_{d\mid N'}\mu(pd)\big(\log(pd)\big)^M-\sum_{d\mid N'}\mu(d)\big(\log d\big)^M=0,\]
+which is exactly what we wanted.
+\end{proof}
+
+As an aside, the above shows that $\mu^{(n)}$ is mostly 0, where $\mu^{(n)}$ denotes the $n^\text{th}$ derivative of $\mu.$
+
+\begin{exercise}
+If $x$ is real, $x\ge1,$ let $\phi(x,n)$ denote the number of positive integers $\le x$ that are relatively prime to $n.$ [Note that $\phi(n,n)=\phi(n).$] Prove that
+\[\phi(x,n)=\sum_{d\mid n}\mu(d)\floor{\frac xd}\quad\text{and }\sum_{d\mid n}\phi\left(\frac xd,\frac nd\right)=\floor x.\]
+\end{exercise}
+
+\begin{proof}
+We simply push the older proofs harder. For the first sum, we note that
+\[\phi(x,n)=\sum_{k=1}^x\floor{\frac1{(n,k)}}.\]
+In order to introduce $\mu,$ we remark that $\mu*u=I,$ so
+\[\phi(x,n)=\sum_{k=1}^x\sum_{d\mid(n,k)}\mu(d).\]
+We wish to reverse the order of summation because that's always what we want to do. Observe that the term $\mu(d)$ appears every time $d$ divides both into $n$ and into $k.$ We can condition on $d\mid n$ in the summation, so $\mu(d)$ appears once for each multiple of $d$ that appears in $k\in[1,x].$ Thus,
+\[\phi(x,n)=\sum_{d\mid n}\sum_{\substack{k=1\\d\mid k}}^x\mu(d)=\sum_{d\mid n}\mu(d)\floor{\frac xd},\]
+which is exactly what we wanted.
+
+For the second sum, we run a similar trick. Observe that
+\[\phi\left(\frac xd,\frac nd\right)=\#\left\{k<\frac xd:\left(k,\frac nd\right)=1\right\}=\#\{kd<x:(kd,n)=d\}.\]
+It follows that
+\[\sum_{d\mid n}\phi\left(\frac xd,\frac nd\right)=\sum_{d\mid n}\#\{k<x:(k,n)=d\}.\]
+However, every positive integer $k$ has has $(k,n)\mid n,$ so looping through all possible $k\mid n$ must catch all positive integers. In particular,
+\[\sum_{d\mid n}\phi\left(\frac xd,\frac nd\right)=\#\{k<x\}=\floor x,\]
+which is again what we wanted. Thus, we are done here.
+\end{proof}
+
+\begin{exercise}
+Prove that $\prod_{d\mid n}d=n^{\sigma_0(n)/2}.$
+\end{exercise}
+
+\begin{proof}
+Briefly, we remark that $d\mid n$ satisfies $d<\sqrt n$ if and only if $\frac nd\mid n$ satisfies $\frac nd>\sqrt n.$ Indeed $n=d\cdot\frac nd,$ so the divisibility equivalence is clear, and the bounding simply comes from rearranging $d<\sqrt n$ into $\frac1d>\frac1{\sqrt n},$ which is $\frac nd>\sqrt n.$ Thus,
+\[\prod_{d\mid n}d=\prod_{\substack{d\mid n\\d<\sqrt n}}d\cdot\prod_{\substack{d\mid n\\d=\sqrt n}}d\cdot\prod_{\substack{d\mid n\\d>\sqrt n}}d=\prod_{\substack{d\mid n\\d<\sqrt n}}d\cdot\prod_{\substack{d\mid n\\d=\sqrt n}}d\cdot\prod_{\substack{d\mid n\\d<\sqrt n}}\frac nd.\]
+Canceling out the $d$ in the first and last sum leaves allows us to split up the $n$ into $\sqrt n$ and $\sqrt n.$
+\[\prod_{d\mid n}d=\prod_{\substack{d\mid n\\d<\sqrt n}}\sqrt n\cdot\prod_{\substack{d\mid n\\d=\sqrt n}}\sqrt n\cdot\prod_{\substack{d\mid n\\d<\sqrt n}}\sqrt n=\prod_{\substack{d\mid n\\d<\sqrt n}}\sqrt n\cdot\prod_{\substack{d\mid n\\d=\sqrt n}}\sqrt n\cdot\prod_{\substack{d\mid n\\d>\sqrt n}}\sqrt n=\prod_{d\mid n}\sqrt n=n^{\sigma_0(n)/2}.\]
+Thus, we are done.
+\end{proof}
+
+\begin{exercise}
+Prove that $\sigma_0(n)$ is odd if, and only if, $n$ is a square.
+\end{exercise}
+
+\begin{proof}
+Using unique prime factorization, let
+\[n=\prod_{k=1}^Np_k^{\alpha_k}\]
+so that $\sigma_0=\prod_k(\alpha_k+1).$ By nature of products, $\sigma_0(n)$ is odd if and only if each $\alpha_k+1$ is odd, which holds if and only if each $\alpha_k$ is even.
+
+Now, if $n$ is a square, then let $n=m^2,$ so the unique prime factorization of $m$ implies
+\[m=\prod_{\ell=1}^Mq_\ell^{\beta_\ell}\implies n=m^2=\prod_{\ell=1}^Mq_\ell^{2\beta_\ell}.\]
+Each exponent is even, so each $\alpha_k,$ which must be the sequence $2\beta_\ell,$ is in fact even.
+
+Conversely, if each $\alpha_k$ is even, let $\alpha_k=2\beta_k$ so that
+\[n=\prod_{k=1}^Np_k^{\alpha_k}=\left(\prod_{k=1}^Np_k^{\beta_k}\right)^2,\]
+so $n$ is a square. Thus, we are done here.
+\end{proof}
+
+\begin{exercise}
+Prove that $\sum_{d\mid n}\sigma_0(d)^3=\left(\sum_{d\mid n}\sigma_0(d)\right)^2.$
+\end{exercise}
+
+\begin{proof}
+I think the quickest way to prove this is by induction. At $n=1,$ the statement reads $1^2=1^3,$ which is true. Now suppose that the statement holds for all positive integers $n<N$ so that we wish to show $N.$ Note $N>1,$ so extract a prime factor and write $N=p^kN'$ where $p\nmid M.$ Notice that if $d\mid N,$ then we can write $d=p^\ell d'$ where $\ell<k$ and $p\nmid d'\mid N$ implies $d'\mid N'.$ Now,
+\[\sum_{d\mid N}\sigma_0(d)^3=\sum_{\ell=0}^k\sum_{d\mid N'}\sigma_0\left(dp^\ell\right)^3=\sum_{d\mid N'}\sigma_0(d)^3\sum_{\ell=0}^k\sigma_0\left(p^\ell\right)^3\]
+because $\sigma_0$ is multiplicative. Similarly,
+\[\left(\sum_{d\mid N}\sigma_0(d)\right)^2=\left(\sum_{\ell=0}^k\sum_{d\mid N'}\sigma_0\left(dp^\ell\right)\right)^2=\left(\sum_{d\mid N'}\sigma_0(d)\right)^2\left(\sum_{\ell=0}^k\sigma_0\left(p^\ell\right)\right)^2\]
+again because $\sigma_0$ is multiplicative. By induction, $\sum_{d\mid N'}\sigma_0(d)^3=\left(\sum_{d\mid N'}\sigma_0(d)\right)^2,$ so it remains to prove that
+\[\sum_{\ell=0}^k\sigma_0\left(p^\ell\right)^3=\left(\sum_{\ell=0}^k\sigma_0\left(p^\ell\right)\right)^2.\]
+However, $\sigma_0\left(p^\ell\right)=\ell+1,$ so the above is really
+\[\sum_{\ell=1}^{k+1}\ell^3=\left(\sum_{\ell=1}^{k+1}\ell+1\right)^2,\]
+which is well-known. Thus, we are done here.
+\end{proof}
+
+\begin{exercise}
+Product form of the M\"obius inversion formula. If $f(n)>0$ for all $n$ and if $a(n)$ is real, $a(1)\ne0,$ prove that
+\[g(n)=\prod_{d\mid n}f(d)^{a(n/d)}\text{ if, and only if, }f(n)=\prod_{d\mid n}g(d)^{b(n/d)},\]
+where $b=a^{-1},$ the Dirichlet inverse of $a.$
+\end{exercise}
+
+\begin{proof}
+While this seems exciting, the key question to ask is how products in the question relate to sums in the M\"obius inversion formula. The obvious answer is logarithms. Observe that $\log\big(f(n)\big)$ exists because $f(n)>0.$ Now, rewrite the statement with $\log$ product-to-sum and exponent rules as
+\[\log\big(g(n)\big)=\sum_{d\mid n}\log\big(f(d)\big)a\left(\frac nd\right)\iff \log\big(f(n)\big)=\sum_{d\mid n}\log\big(g(d)\big)b\left(\frac nd\right).\]
+Using the Dirichlet convolution notation, this can be rewritten as
+\[\log(g)=\log(f)*a\iff\log(f)=\log(g)*b.\]
+However, $a$ and $b$ are Dirichlet inverses of each other, so the above statements are equivalent by multiplication by $b$ and $a$ respectively; note $a*b=I.$
+\end{proof}
+
+\begin{exercise}
+Let $f(x)$ be defined for all rational $x$ in $0\le x\le1$ and let
+\[F(n)=\sum_{k=1}^nf\left(\frac kn\right),\qquad F^*(n)=\sum_{\substack{k=1\\(k,n)=1}}^nf\left(\frac kn\right).\]
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that $F^*=\mu*F,$ the Dirichlet product of $\mu$ and $F.$
+    \item Use (a) or some other means to prove that $\mu(n)$ is the sum of the primitive $n$th roots of unity:
+    \[\mu(n)=\sum_{\substack{k=1\\(k.n)=1}}^ne^{2\pi ik/n}.\]
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Cool question.
+\begin{enumerate}[label=(\alph*)]
+    \item As in 9, we can rewrite the sum in $F^*$ to introduce some $\mu$ into the mix. Note
+    \[F^*(n)=\sum_{\substack{k=1\\(k,n)=1}}^nf\left(\frac kn\right)=\sum_{k=1}^nf\left(\frac kn\right)\floor{\frac1{(k,n)}}=\sum_{k=1}^nf\left(\frac kn\right)\sum_{d\mid(n,k)}\mu(d).\]
+    As usual, we reparameterize by $d.$ For a fixed $d\mid n,$ $d$ appears whenever $d\mid k,$ so
+    \[F^*(n)=\sum_{d\mid n}\mu(d)\sum_{\substack{k=1\\d\mid k}}^nf\left(\frac kn\right)=\sum_{d\mid n}\mu(d)\underbrace{\sum_{k=1}^{n/d}f\left(\frac k{n/d}\right)}_{F(n/d)}.\]
+    Thus, $F^*=\mu*F,$ which is what we wanted.
+    \item Unsurprisingly, we use $f(x)=e^{2\pi ix},$ motivated by the exponential in the problem. Note
+    \[F(n)=\sum_{k=1}^nf\left(\frac kn\right)=\sum_{k=1}^ne^{2\pi ik/n}=e^{2\pi i/n}\sum_{k=0}^{n-1}e^{2\pi ik/n}.\]
+    If $n=1,$ then this is simply $F(1)=e^{2\pi i1/1}=1.$ Otherwise, $e^{2\pi i/n}\ne1$ (the real part is less than 1), so
+    \[F(n)=e^{2\pi i/n}\sum_{k=0}^{n-1}e^{2\pi ik/n}=e^{2\pi i/n}\cdot\frac{1-e^{2\pi in/n}}{1-e^{2\pi i/n}}=e^{2\pi i/n}\cdot\frac{1-1}{1-e^{2\pi i/n}}=0.\]
+    Thus, $F(n)=1$ if $n=1$ and 0 otherwise, so $F=I.$ It follows that $F^*=\mu*F=\mu*I=\mu,$ so
+    \[\mu(n)=F^*(n)=\sum_{\substack{k=1\\(k,n)=1}}^ne^{2\pi ik/n}.\]
+    Thus, we are done here.
+\end{enumerate}
+Having solved all parts of the problem, we are done.
+\end{proof}
+
+\begin{exercise}
+Let $\phi_k(n)$ denote the sum of the $k$th powers of the number $\le n$ and relatively prime to $n.$ Note that $\phi_0(n)=\phi(n).$ Use Exercise 14 or some other means to prove that
+\[\sum_{d\mid n}\frac{\phi_k(d)}{d^k}=\frac{1^k+\cdots+n^k}{n^k}.\]
+\end{exercise}
+
+\begin{proof}
+I guess this is cute. Let $f(x)=x^k.$ On one hand,
+\[F(n)=\sum_{\ell=1}^nf\left(\frac\ell n\right)=\sum_{\ell=1}^n\left(\frac\ell n\right)^k\]
+is the right-hand side of the given expression. However, $F^*=F*\mu,$ so $F^**u=F*\mu*u=F,$ so because
+\[F^*(n)=\sum_{\substack{\ell=1\\(\ell,n)=1}}^nf\left(\frac\ell n\right)=\sum_{\substack{\ell=1\\(\ell,n)=1}}^n\left(\frac\ell n\right)^k=\frac{\phi_k(n)}{n^k},\]
+we have that
+\[\sum_{d\mid n}\frac{\phi_k(d)}{d^k}=(F^**u)(n)=F(n)=\sum_{\ell=1}^n\frac{\ell^k}{n^k},\]
+which is exactly what we wanted.
+\end{proof}
+
+\begin{exercise}
+Invert the formula in Exercise 15 to obtain, for $n>1,$
+\[\phi_1(n)=\frac12n\phi(n),\qquad\text{and}\qquad\phi_2(n)=\frac13n^2\phi(n)+\frac n6\prod_{p\mid n}(1-p).\]
+Derive a corresponding formula for $\phi_3(n).$
+\end{exercise}
+
+\begin{proof}
+The first expression can be done in a more elementary fashion by noting that $(k,n)=(n-k,n)$ implies that $(k,n)=1$ if and only if $(n-k,n)=1.$ Thus, pair off each $k$ to form an $n,$ of which there are $\frac12\phi(n)$ pairs.
+
+To do this methodically, note that we know
+\[\left(\frac{\phi_1}N*u\right)(n)=\sum_{d\mid n}\frac{\phi_1(d)}{d^1}=\frac1n\sum_{k=1}^nk=\frac12n+\frac12=\frac12N(n)+\frac12u(n)\]
+using the previous exercise. However, convoluting both sides by $\mu,$ which satisfies $u*\mu=I,$ and using the distributive and cancellation law tells us that
+\[\frac{\phi_1}N(n)=\frac12(N*\mu)(n)+\frac12(u*\mu)(n).\]
+Because we asserted $n>1,$ we see $u*\mu=I$ is identically 0. Further note that $N*\mu=\phi,$ so we see that
+\[\frac{\phi_1(n)}n=\frac12\phi(n)+0.\]
+This rearranges into $\phi_1(n)=\frac12n\phi(n),$ which is what we wanted.
+
+We do a similar technique for $\phi_2.$ Observe
+\[\left(\frac{\phi_2}{N^2}*u\right)(n)=\sum_{d\mid n}\frac{\phi_2(d)}{d^2}=\frac1{n^2}\sum_{k=1}^nk^2=\frac1{n^2}\cdot\frac{n(n+1)(2n+1)}6=\frac13n+\frac12+\frac1{6n}.\]
+Applying a convolution with $\mu$ on both sides finds that
+\[\left(\frac{\phi_2}{N^2}\right)(n)=\frac13(N*\mu)(n)+\frac12(u*\mu)(n)+\frac16\left(\frac1N*\mu\right)(n).\]
+Briefly, note that $N*\mu=\phi$ and $u*\mu=I$ like last time, so $n>1$ means $u*\mu$ vanishes. Additionally,
+\[\left(\frac1N*\mu\right)(n)=\sum_{d\mid n}\mu(d)\cdot\frac dn=\frac1n\sum_{d\mid n}d\mu(d).\]
+Naturally, we claim that $\left(\frac1N*\mu\right)(n)=\frac1n\prod_{p\mid n}(1-p),$ which we could do directly. However, we could just note that the function is multiplicative because $\frac1N$ and $\mu$ are, an evaluating on the arbitrary prime power $p^k$ gives
+\[\left(\frac1N*\mu\right)\left(p^k\right)=\frac1{p^k}\sum_{\ell=0}^kp^\ell\mu\left(p^\ell\right)=\frac1{p^k}(1-p)=\frac1{p^k}\prod_{q\mid p^k}(1-q),\]
+which is what we wanted. Indeed, note all the terms $\ell>1$ vanish because $\mu\left(p^2\cdot p^{\ell-2}\right)=0.$ Thus,
+\[\left(\frac{\phi_2}{N^2}\right)(n)=\frac13\phi(n)+\frac16\cdot\frac1n\prod_{p\mid n}(1-p).\]
+This rearranges into $\phi_2(n)=\frac13n^2\phi(n)+\frac n6\prod_{p\mid n}(1-p),$ which is exactly what we wanted.
+
+For $\phi_3,$ we again see
+\[\left(\frac{\phi_3}{N^3}*u\right)(n)=\sum_{d\mid n}\frac{\phi_3(d)}{d^3}=\frac1{n^3}\sum_{k=1}^nk^3=\frac1{n^3}\cdot\frac{n^2(n+1)^2}{2^2}=\frac14n+\frac12+\frac14\cdot\frac1n.\]
+Applying a convolution with $\mu$ as usual,
+\[\left(\frac{\phi_3}{N^3}\right)(n)=\frac14(N*\mu)(n)+\frac12(u*\mu)(n)+\frac14\cdot\left(\frac1N*\mu\right)(n).\]
+Again, $N*\mu=\phi,$ and $u*\mu=I,$ which vanishes for $n>1.$ And now we already know that $\left(\frac1N*\mu\right)(n)=\frac1n\prod_{p\mid n}(1-p),$ so
+\[\left(\frac{\phi_3}{N^3}\right)(n)=\frac14\phi(n)+\frac14\cdot\frac1n\prod_{p\mid n}(1-p).\]
+This rearranges into $\boxed{\phi_3(n)=\frac14n^3\phi(n)+\frac{n^2}4\prod_{p\mid n}(1-p)},$ which is a formula I guess.
+\end{proof}
+
+\begin{exercise}
+Jordan's totient $J_k$ is a generalization of Euler's totient defined by
+\[J_k(n)=n^k\prod_{p\mid n}\left(1-p^{-k}\right).\]
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that
+    \[J_k(n)=\sum_{d\mid n}\mu(d)\left(\frac nd\right)^k\qquad\text{and}\qquad n^k=\sum_{d\mid n}J_k(d).\]
+    \item Determine the Bell series for $J_k.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+As usual, the old proofs generalize.
+\begin{enumerate}[label=(\alph*)]
+    \item We show the first sum and use M\"obius inversion for the second. Let $P=\{p\in\mathbb P:p\mid n\}$ so that
+    \[\frac{J_k(n)}{n^k}=\prod_{p\in S}\left(1-\frac1{p^k}\right)=\sum_{S\subseteq P}\Bigg(\prod_{p\not\in S}1\prod_{p\in S}\left(-\frac1{p^k}\right)\Bigg)=\sum_{S\subseteq P}(-1)^{|S|}\prod_{p\in S}\frac1{p^k}.\]
+    However, for each $S\subseteq P,$ we can biject this to some $d\mid n$ for which $d$ is squarefree via product. If $d\mid n$ is sqaurefree, then its prime factorization provides a set of primes $S\subseteq P,$ and if $S\subseteq P,$ then the product of $S$ named $d$ certainly divides $n.$ Thus,
+    \[\frac{J_k(n)}{n^k}=\sum_{\substack{d\mid n\\d\text{ squarefree}}}(-1)^{v(d)}\prod_{p\mid d}\frac1{p^k}.\]
+    Observe $(-1)^{v(d)}=\mu(d)$ for $d$ squarefree, but it's 0 if $d$ is not, so we may fearlessly introduce those terms as
+    \[\frac{J_k(n)}{n^k}=\sum_{d\mid n}\mu(d)\cdot\frac1{d^k}.\]
+    Multiplying both sides by $n^k$ gives the sum. Now, we know $J_k=\mu*N^k$ by the first summation, so multiplying both sides by $u$ gives $N^k=J_k*u.$ Expanding this out tells us
+    \[n^k=\sum_{d\mid n}J_k(n)\cdot1,\]
+    which is what we wanted.
+    \item Note that $J_k=\mu*N^k,$ so
+    \[(J_k)_p(x)=\mu_p(x)\left(N^k\right)_p(x)=(1-x)\cdot\frac1{1-p^kx}=\frac{1-x}{1-p^kx}\]
+    using properties of Bell series and other already-known series.
+\end{enumerate}
+Having completed all parts, we are done here.
+\end{proof}
+
+\begin{exercise}
+Prove that every number of the form $2^{a-1}\left(2^a-1\right)$ is perfect if $2^a-1$ is prime.
+\end{exercise}
+
+\begin{proof}
+This is boring. Each divisor $d$ must have a prime factorization containing only the primes 2 and $2^a-1,$ each of whose powers must be less than $a-1$ and 1 respectively. Indeed, any divisor $d$ must have its prime factorization match that of $2^{a-1}\left(2^a-1\right)$ but be no larger for each prime. Thus, the sum of divisors is
+\[\sum_{d\mid n}d=\sum_{k=0}^{a-1}\left(2^k+2^k\left(2^a-1\right)\right)=2^a\sum_{k=0}^{a-1}2^k=2\cdot2^{a-1}\left(2^a-1\right),\]
+so our number is indeed perfect.
+\end{proof}
+
+\begin{exercise}
+Prove that if $n$ is \textit{even} and perfect then $n=2^{a-1}\left(2^a-1\right)$ for some $a\ge2.$
+\end{exercise}
+
+\begin{proof}
+Suppose $n=2^km$ where $k>0$ and $m$ is odd. We know that $\sigma(n)=2n$ because $n$ is perfect, which is
+\[2^{k+1}m=2n=\sigma(n)=\sigma\left(2^km\right)=\sigma\left(2^k\right)\sigma(m)=\left(\sum_{\ell=0}^k2^\ell\right)\sigma(m)=\left(2^{k+1}-1\right)\sigma(m).\]
+Note that it follows $2^{k+1}-1$ is an odd divisor of $2^{k+1}m,$ so $2^{k+1}-1$ divides $m.$ Thus,
+\[\sigma(m)\ge m+\frac m{2^{k+1}-1},\]
+with the equality case occurring if and only if the only divisor of $m$ being that $2^{k+1}-1$ is the only divisor of $m,$ larger than 1. Thus, we need $m=2^{k+1}-1$ as well as $m$ prime because it only has 2 divisors. With that said, we know
+\[2^{k+1}m=\left(2^{k+1}-1\right)\sigma(m)\ge\left(2^{k+1}-1\right)\left(m+\frac m{2^{k+1}-1}\right)=\left(2^{k+1}-1\right)m+m=2^{k+1}m,\]
+which is precisely the equality case. Thus, $m=2^{k+1}-1$ a prime, so $n=2^k\left(2^{k+1}-1\right),$ as desired.
+\end{proof}
+
+\begin{exercise}
+Let $P(n)$ be the product of the positive integers which are $\le n$ and relatively prime to $n.$ Prove that
+\[P(n)=n^{\phi(n)}\prod_{d\mid n}\left(\frac{d!}{d^d}\right)^{\mu(n/d)}.\]
+\end{exercise}
+
+\begin{proof}
+We use number 13. Note $\mu*u=I,$ so we let $g(n)=\frac{P(n)}{n^{\phi(n)}}$ and $f(n)=\frac{n!}{n^n}$ so that
+\[\frac{P(n)}{n^{\phi(n)}}=\prod_{d\mid n}\left(\frac{d!}{d^d}\right)^{\mu(n/d)}\iff\frac{n!}{n^n}=\prod_{d\mid n}\left(\frac{P(d)}{d^{\phi(d)}}\right)^1.\]
+However, notice that
+\[\frac{P(d)}{d^{\phi(d)}}=\frac1{d^{\phi(d)}}\prod_{\substack{k=1\\(k,n)=1}}^dk=\frac1{(n/d)^{\phi(d)}\cdot d^{\phi(d)}}\prod_{\substack{k=1\\(k,n)=n/d}}^nk,\]
+where the scale factor comes from multiplying each factor in the sum by $\frac nd.$ Thus,
+\[\prod_{d\mid n}\frac{P(d)}{d^{\phi(d)}}=\prod_{d\mid n}\frac1{n^{\phi(d)}}\prod_{\substack{k=1\\(k,n)=n/d}}^nk=n^{-\sum_{d\mid n}\phi(d)}\prod_{k=1}^nk=n^{-n}n!.\]
+As usual, we have used th trick that looping through all possible values of $(k,n)=\frac nd$ will hit all $k$ in the interval $1\le k\le n,$ so $n!$ appears. Also, $\phi*u=N$ makes the $n$ in the exponent appear. With that said, we have exactly what we wanted, so we are done here.
+\end{proof}
+
+\begin{exercise}
+Let $f(n)=\floor{\sqrt n}-\floor{\sqrt{n-1}}.$ Prove that $f$ is multiplicative but not completely multiplicative.
+\end{exercise}
+
+\begin{proof}
+We claim that $f(n)$ is 1 if $n$ is a square and 0 otherwise. If $n=k^2$ is a square, then
+\[\floor{n-1}=\floor{k^2-1}\in\left[\floor{k^2-2k+1},\,\floor{k^2}\right)=[k-1,k)\]
+because $2k-1\ge1.$ Thus, $\sqrt{n-1}=k-1,$ so $f(n)=k-(k-1)=1.$
+
+Otherwise, $n$ is not a perfect square, so $n$ can be found between two squares as $(k-1)^2<n<k^2.$ (For example, $k=\floor{\sqrt n}+1.$) This implies that $\floor{\sqrt n}=k-1,$ but $k^2>n-1\ge(k-1)^2$ as well, so $\floor{\sqrt{n-1}}=k-1.$ Thus, $f(n)=(k-1)-(k-1)=0,$ as desired.
+
+With this definition of $f,$ we note that $f=\lambda*u$ as in the textbook, so $f$ is the convolution of two (completely) multiplicative functions, implying that $f$ is at least multiplicative. However, 2 is not a square, so $f(2)=0,$ but $f(4)=1\ne 0\cdot0=f(2)f(2).$ Thus, $f$ is not completely multiplicative.
+\end{proof}
+
+\begin{exercise}
+Prove that
+\[\sigma_1(n)=\sum_{d\mid n}\phi(d)\sigma_0\left(\frac nd\right),\]
+and derive a generalization involving $\sigma_\alpha.$
+\end{exercise}
+
+\begin{proof}
+We claim that for $k>0,$
+\[\sigma_k(n)=\sum_{d\mid n}J_k(d)\sigma_0\left(\frac nd\right),\]
+so plugging in $k=1$ will extract the desired formula. Note that $J_k=\mu*N^k,$ so $N^k=J_k*u$. Also,
+\[\sigma_k(n)=\sum_{d\mid n}d^k\implies\sigma_k=N^k*u.\]
+It follows that
+\[\sigma_k=N^k*u=J_k*u*u=J_k*N^0*u=J_k*\sigma_0.\]
+However, expanding this gives exactly the statement that we wanted to prove, so we are done here.
+\end{proof}
+
+\begin{exercise}
+Prove the following example or exhibit a counterexample. If $f$ is multiplicative, then $F(n)=\prod_{d\mid n}f(n)$ is multiplicative.
+\end{exercise}
+
+\begin{proof}
+This is very false. Simply let $f=\phi.$ Now,
+\[F(2\cdot3)=\phi(1)\phi(2)\phi(3)\phi(6)=1\cdot1\cdot2\cdot2=4\qquad\text{and}\qquad F(5)=\phi(1)\phi(5)=4,\]
+but
+\[F(2\cdot3\cdot5)=\phi(1)\phi(2)\phi(3)\phi(5)\phi(6)\phi(10)\phi(15)\phi(30)=1\cdot1\cdot2\cdot4\cdot2\cdot4\cdot8\cdot8,\]
+which is strictly larger than $F(2\cdot3)F(5)=4\cdot4,$ so we are done.
+\end{proof}
+
+\begin{exercise}
+Let $A(x)$ and $B(x)$ be formal power series. If the product $A(x)B(x)$ is the zero series, prove that at least one factor is zero. In other words, the ring of formal power series has no zero divisors.
+\end{exercise}
+
+\begin{proof}
+Let $A(x)=\sum a_kx^k$ and $B(x)=\sum b_\ell x^\ell.$ We show the contrapositive: If both $A$ and $B$ are nonzero, then $AB$ is nonzero. Indeed, if both $A$ and $B$ are nonzero, then at least one element of each $\{a_k\}$ and $\{b_\ell\}$ is nonzero, so by well-ordering choose the least indices $k_0$ and $\ell_0$ such that $a_{k_0}\ne0$ and $b_{\ell_0}\ne0.$ Now if we let $(AB)(x)=\sum c_kx^k,$ we have that
+\[c_{k_0+\ell_0}=\sum_{k=0}^{k_0+\ell_0}a_kb_{k_0+\ell_0-k}.\]
+Now, if $k<k_0,$ then $a_k=0$ because $a_{k_0}$ is the least nonzero $a_k,$ but if $k>k_0,$ then $b_{k_0+\ell_0-k}=0$ because $k_0+\ell_0-k<\ell_0,$ and $b_{\ell_0}$ is the least nonzero $b_\ell.$ Thus, the only nonzero term occurs at $k=k_0,$ so
+\[c_{k_0+\ell_0}=a_{k_0}b_{\ell_0}.\]
+Thus, $AB$ has a nonzero term, namely $c_{k_0+\ell_0}$ because $\C$ has no zero divisors, so $AB\ne0,$ as desired.
+\end{proof}
+
+\begin{exercise}
+Assume $f$ is multiplicative. Prove that:
+\begin{enumerate}[label=(\alph*)]
+    \item $f^{-1}(n)=\mu(n)f(n)$ for every squarefree $n.$
+    \item $f^{-1}\left(p^2\right)=f(p)^2-f\left(p^2\right)$ for every prime $p.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Nice and easy.
+\begin{enumerate}[label=(\alph*)]
+    \item Observe $f^{-1}*f=I,$ so in particular, $\left(f^{-1}*f\right)(p)=I(p)=0.$ Thus,
+    \[0=\left(f^{-1}*f\right)(p)=\sum_{d\mid p}f^{-1}(d)f\left(\frac pd\right)=f^{-1}(1)f(p)+f^{-1}(p)f(1).\]
+    Recall $f(1)=f^{-1}(1)=1$ because both functions are multiplicative, a property of the Dirichlet convolution. Now, this means the above rearranges into $f^{-1}(p)=-f(p).$
+    
+    To finish, let $n$ be squarefree so that its maximal prime powers are prime. Because $f^{-1}$ is multiplicative,
+    \[f^{-1}(n)=\prod_{p\mid n}f^{-1}(p)=\prod_{p\mid n}-f(p)=\prod_{p\mid n}-1\cdot\prod_{p\mid n}f(p)=\mu(n)f(n).\]
+    Note that the product $\prod_{p\mid n}-1$ is $-1$ to the power of the number of primes, which is exactly $\mu(n).$
+    \item Again, note that $\left(f^{-1}*f\right)\left(p^2\right)=I\left(p^2\right)=0,$ so
+    \[0=\sum_{d\mid p^2}f^{-1}(d)f\left(\frac{p^2}d\right)=f^{-1}(1)f\left(p^2\right)+f^{-1}(p)f(p)+f^{-1}\left(p^2\right)f(1).\]
+    Plugging in $f^{-1}(1)=f(1)=1$ (they're multiplicative) and rearranging reveals that
+    \[f^{-1}\left(p^2\right)=-f^{-1}(p)f(p)-f^{-1}\left(p^2\right).\]
+    Recall from (a) that $f^{-1}(p)=-f(p),$ so we know that in fact $f^{-1}\left(p^2\right)=f(p)^2-f\left(p^2\right).$
+\end{enumerate}
+Having completed both parts of the problem, we're done here.
+\end{proof}
+
+\begin{exercise}
+Assume $f$ is multiplicative. Prove that $f$ is completely multiplicative if, and only if, $f^{-1}\left(p^a\right)=0$ for all primes $p$ and all integers $a\ge2.$
+\end{exercise}
+
+\begin{proof}
+Here is a fast proof using Bell series. $f$ is completely multiplicative iff $f\left(p^a\right)=f(p)^a$ for each $a$ iff
+\[f_p(x)=\sum_{k=0}^\infty f\left(p^k\right)x^k=\sum_{k=0}^\infty\big(f(p)x\big)^k=\frac1{1-f(p)x}.\]
+This holds iff $\left(f^{-1}\right)_p(x)=1-f(p)x,$ the formal power series's multiplicative inverse, which holds iff $f^{-1}\left(p^a\right)=0$ for each $a\ge2.$ Observe we already know $f^{-1}(1)=1$ and $f^{-1}(p)=-f(p)$ holds unconditionally.
+
+Machinery aside, we note that $f$ is indeed completely multiplicative if and only if $f\left(p^a\right)=f(p)^a$ for each $a\ge2,$ so we use this condition instead.
+
+If $f\left(p^a\right)=f(p)^a,$ then we induct on $a.$ Note the previous problem had us show 
+\[f^{-1}\left(p^2\right)=f(p)^2-f\left(p^2\right)=f(p)^2-f(p)^2=0,\]
+which is our base case. Now assume the statement holds up to $b+1,$ and we note because $\left(f^{-1}*f\right)\left(p^{b+1}\right)=I\left(p^{b+1}\right)=0,$
+\[0=\sum_{d\mid p^{b+1}}f^{-1}(d)f\left(\frac{p^{b+1}}d\right)=f(1)f^{-1}\left(p^{b+1}\right)+\sum_{k=0}^bf^{-1}\left(p^k\right)f\left(p^{b+1-k}\right).\]
+Observe that all the terms $k\ge2$ vanish because of the $f^{-1}\left(p^k\right)$ term. Otherwise, we have
+\[\sum_{k=0}^bf^{-1}\left(p^k\right)f\left(p^{b+1-k}\right)=f^{-1}(1)f\left(p^{b+1}\right)+f^{-1}(p)f\left(p^b\right)=f\left(p^{b+1}\right)-f\left(p^{b+1}\right)=0\]
+because $f$ is completely multiplicative. Thus, the entire sum is 0, so we know $0=f(1)f^{-1}\left(p^{b+1}\right),$ done.
+
+Otherwise suppose $f^{-1}\left(p^a\right)=0$ for each $a\ge2.$ We will inductively show $f\left(p^a\right)=f(p)^a.$ For $a=0$ and $a=1,$ there is nothing to prove. Now assume up to $b$ so that we want to show $b.$ Again, $\left(f^{-1}*f\right)\left(p^b\right)=I\left(p^b\right)=0,$ so
+\[0=\sum_{d\mid p^b}f(d)f^{-1}\left(\frac{p^b}d\right)=\sum_{k=0}^bf^{-1}\left(p^k\right)f\left(p^{b-k}\right).\]
+Note that the terms $k\ge2$ vanish because $f^{-1}\left(p^k\right)=0.$ Otherwise, $f^{-1}(1)=1$ and $f^{-1}(p)=-f(p),$ so
+\[0=f^{-1}(1)f\left(p^b\right)+f^{-1}(p)f\left(p^{b-1}\right).\]
+This rearranges into $f\left(p^b\right)=f(p)f\left(p^{b-1}\right)=f(p)^b,$ which is what we wanted.
+\end{proof}
+
+\begin{exercise}
+\begin{enumerate}[label=(\alph*)]
+    \item If $f$ is completely multiplicative, prove that
+    \[f\cdot(g*h)=(f\cdot g)*(f\cdot h)\]
+    for all arithmetical functions $g$ and $h,$ where $f\cdot g$ denotes the ordinary product, $(f\cdot g)(n)=f(n)g(n).$
+    \item If $f$ is multiplicative and if the relation in (a) holds for $g=\mu$ and $h=\mu^{-1},$ prove that $f$ is completely multiplicative.
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Let's get this over with.
+\begin{enumerate}[label=(\alph*)]
+    \item Note that we have
+    \[\big((fg)*(fh)\big)(n)=\sum_{d\mid n}(fg)(d)\cdot(fh)\left(\frac nd\right)=f(d)f\left(\frac nd\right)\sum_{d\mid n}g(d)h\left(\frac nd\right).\]
+    However, we know $f$ is completely multiplicative, so $f(d)f\left(\frac nd\right)=f(n),$ so the above reads $f(n)\cdot(g*h)(n),$ which shows that $f\cdot(g*h)=(f\cdot g)*(f\cdot h),$ which is what we wanted.
+    \item Let $g=\mu$ and $h=\mu^{-1}=u$ so that we know
+    \[f\cdot(g*h)=f\cdot(\mu*u)=f\cdot I=f(1)I=I\]
+    because $I$ will zero out all times other than $n=1,$ at which $f(1)=1$ because $f$ is multiplicative. But on the other side,
+    \[(f\cdot g)*(f\cdot h)=(f\mu)*(fu)=(f\mu)*f.\]
+    Because this is just $I,$ we know that $f\mu=f^{-1}.$ Theorem 2.17 tells us that this is equivalent to $f$ being completely multiplicative, so we are done.
+\end{enumerate}
+Having completed all parts of the problem, we are done here.
+\end{proof}
+
+For completeness, I remark that $f\mu=f^{-1}$ implies completely multiplicative because we can inductively show $f\left(p^a\right)=f(p)^a.$ Indeed, we need
+\[0=I\left(p^a\right)=\left(f^{-1}*f\right)\left(p^a\right)=(f\mu*f)\left(p^a\right)=\sum_{b=0}^af\left(p^b\right)\mu\left(p^b\right)f\left(p^{a-b}\right).\]
+Because all terms in the sum $b\ge2$ vanish due to the $\mu\left(p^b\right)$ term, this rearranges into
+\[0=f(1)f\left(p^b\right)-f(p)f\left(p^{b-1}\right),\]
+so we know that $f\left(p^b\right)=f(p)f\left(p^{b-1}\right),$ which kills the inductive step.
+
+\begin{exercise}
+\begin{enumerate}[label=(\alph*)]
+    \item If $f$ is completely multiplicative, prove that
+    \[(f\cdot g)^{-1}=f\cdot g^{-1}\]
+    for every arithmetical function $g$ with $g(1)\ne0.$
+    \item If $f$ is multiplicative and the relation in (a) holds for $g=\mu^{-1},$ prove that $f$ is completely multiplicative.
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Well, here we go again.
+\begin{enumerate}[label=(\alph*)]
+    \item In the expression seen in 27 (a), let $h=g^{-1}.$ This tells us that
+    \[f\cdot\left(g*g^{-1}\right)=f\cdot I=f(1)\cdot I=I\]
+    because $I$ makes all terms $n\ne1$ vanish, and $f(1)=1$ because $f$ is multiplicative. On the other side,
+    \[(f\cdot g)*\left(f*g^{-1}\right),\]
+    which we know must equal $I.$ Inverting tells us that $(f\cdot g)^{-1}=f*g^{-1},$ which is what we wanted.
+    \item Simply plugging tells us that $g=\mu^{-1}=u,$ so this is $(f\cdot g)^{-1}=(fu)^{-1}=f^{-1}$ and $f\cdot g^{-1}=f\mu,$ so we know $f^{-1}=f\mu,$ which implies that $f$ is completely multiplicative from Theorem 2.17.
+\end{enumerate}
+Having completed all parts of the problem, we are done here.
+\end{proof}
+
+\begin{exercise}
+Prove that there is a multiplicative arithmetical function $g$ such that
+\[\sum_{k=1}^nf\big((k,n)\big)=\sum_{d\mid n}f(d)g\left(\frac nd\right)\]
+for every arithmetical function $f.$ Here $(k,n)$ is the gcd of $n$ and $k.$ Use this identity to prove that
+\[\sum_{k=1}^n(k,n)\mu\big((k,n)\big)=\mu(n).\]
+\end{exercise}
+
+\begin{proof}
+As usual, we begin by using the trick to reparamaterize the $k=1$ to $n$ sum in terms of $d\mid n.$ Note that each possible value of $(k,n)$ is a divisor of $n,$ so we may write
+\[\sum_{k=1}^nf\big((k,n)\big)=\sum_{d\mid n}\sum_{\substack{k=1\\(k,n)=d}}^nf(d)=\sum_{d\mid n}f(d)\cdot\#\{k<n:(k,n)=d\}.\]
+However, we, as usual, note that
+\[\#\{k<n:(k,n)=d\}=\#\left\{\frac kd<\frac nd:\left(\frac kd,\frac nd\right)=1\right\}=\phi\left(\frac nd\right).\]
+It follows that
+\[\sum_{k=1}^nf\big((k,n)\big)=\sum_{d\mid n}f(d)\phi\left(\frac nd\right),\]
+so $g=\phi$ works find as an example of a multiplicative function.
+
+To show the sum, we let $f=N\mu$ so that we are summing
+\[\sum_{k=1}^nf\big((k,n)\big)=\sum_{d\mid n}f(d)\phi\left(\frac nd\right)=\sum_{d\mid n}d\cdot \mu(d)\phi\left(\frac nd\right).\]
+It follows that we are trying to prove that $N\mu*\phi=\mu.$ Convolution with $u$ means that it is equivalent to prove that $N\mu*N=N\mu*\phi*u=\mu*u=I.$ However,
+\[(N\mu*N)(n)=\sum_{d\mid n}d\cdot\mu(d)\cdot\frac nd=n\sum_{d\mid n}\mu(d)=n\cdot I(n).\]
+Now, $n\cdot I(n)$ is 1 if $n=1$ but 0 otherwise because $I(n)=0.$ Thus, $N\mu*N=NI=I,$ so we are done.
+\end{proof}
+
+\begin{exercise}
+Let $f$ be multiplicative and let $g$ be any arithmetical function. Assume that
+\[f\left(p^{n+1}\right)=f(p)f\left(p^n\right)-g(p)f\left(p^{n-1}\right)\text{  for all primes }p\text{ and all }n\ge1.\tag{a}\]
+Prove that for each prime $p$ the Bell series for $f$ has the form
+\[f_p(x)=\frac1{1-f(p)x+g(p)x^2}.\tag{b}\]
+Conversely, prove that (b) implies (a).
+\end{exercise}
+
+\begin{proof}
+Note the following chain of equivalences.
+\begin{align*}
+    f_p(x) &= \frac1{1-f(p)x+g(p)x^2} \\
+    f_p(x) &= 1+f(p)xf_p(x)-g(p)x^2f_p(x) \\
+    f_p(x) &= 1+f(p)x\sum_{k=0}^\infty f\left(p^k\right)x^k-g(p)x^2\sum_{k=0}^\infty f\left(p^k\right)x^k \\
+    f_p(x) &= 1+f(p)x+\sum_{k=2}^\infty f(p)f\left(p^{k-1}\right)x^k-\sum_{k=2}^\infty g(p)f\left(p^{k-2}\right)x^k \\
+    f_p(x) &= 1+f(p)x+\sum_{k=2}^\infty\left(f(p)f\left(p^{k-1}\right)-g(p)f\left(p^{k-2}\right)\right)x^k \\
+    f\left(p^k\right) &= f(p)f\left(p^{k-1}\right)-g(p)f\left(p^{k-2}\right),
+\end{align*}
+which indeed shows (a)$\iff$(b).
+\end{proof}
+
+\begin{exercise}
+(Continuation of Exercise 30.) If $g$ is completely multiplicative prove that statement $(a)$ of Exercise 30 implies
+\[f(m)f(n)=\sum_{d\mid(m,n)}g(d)f\left(\frac {mn}{d^2}\right),\]
+where the sum is extended over the positive divisors of (m,n). [Hint: Consider first the case $m=p^a,\,n=p^b.$]
+\end{exercise}
+
+\begin{proof}
+We show the case for $m=p^a$ and $n=p^b.$ By symmetry, we can assert $a\le b$ without loss of generality so that $(m,n)=p^a.$ Note
+\[\sum_{d\mid(m,n)}g(d)f\left(\frac{mn}{d^2}\right)=\sum_{k=0}^ag\left(p^k\right)f\left(p^{a+b-2k}\right).\]
+We now induct on $a.$ If $a=0,$ the sum has only one term, namely $g(1)f\left(p^b\right)=f(1)f\left(p^b\right),$ so there is little or prove upon noting $f(1)=g(1)=1$ because both functions are multiplicative. Statement (a) gives
+\[f(p)f\left(p^b\right)=f\left(p^{b+1}\right)+g(p)f\left(p^{b-1}\right),\]
+which is the $a=1$ case. Now suppose the statement is true for $A-1$ and $A-2$ so that we aim to show $A.$ In particular, we know that
+\[f\left(p^{A-1}\right)f\left(p^B\right)=\sum_{k=0}^{A-1}g\left(p^k\right)f\left(p^{A+B-1-2k}\right).\]
+The trick is to multiply both sides by $f(p)$ in order to introduce $f\left(p^A\right)$ to the right-hand side. Note
+\[f(p)f\left(p^{A-1}\right)f\left(p^B\right)=\left(f\left(p^A\right)+g(p)f\left(p^{A-2}\right)\right)f\left(p^B\right)=f\left(p^A\right)f\left(p^B\right)+g(p)f\left(p^{A-2}\right)f\left(p^B\right),\]
+but also
+\[\sum_{k=0}^{A-1}g\left(p^k\right)f(p)f\left(p^{A+B-1-2k}\right)=\sum_{k=0}^{A-1}g\left(p^k\right)\left(f\left(p^{A+B-2k}\right)+g(p)f\left(p^{A+B-2k-2}\right)\right).\]
+This second sum splits into
+\[\sum_{k=0}^{A-1}g\left(p^k\right)f\left(p^{A+B-2k}\right)+\sum_{k=0}^{A-1}g(p^{k+1})f\left(p^{A+B-2k-2}\right),\]
+which after shifting indices can be rearranges into
+\[\sum_{k=0}^Ag\left(p^k\right)f\left(p^{A+B-2k}\right)+g(p)\sum_{k=0}^{A-2}g(p^k)f\left(p^{A-2+B-2k}\right).\]
+Thus, we know that
+\[f\left(p^A\right)f\left(p^B\right)+g(p)f\left(p^{A-2}\right)f\left(p^B\right)=\sum_{k=0}^Ag\left(p^k\right)f\left(p^{A+B-2k}\right)+g(p)\sum_{k=0}^{A-2}g(p^k)f\left(p^{A-2+B-2k}\right),\]
+but the inductive hypothesis allows us to cancel both ``error'' terms to get the statement we wanted. Observe that the induction holds irrelevant of $A\le B,$ so it holds under this condition as well. Thus, we have shown the case for $m=p^a$ and $n=p^b$ entirely.
+\iffalse
+To finish the problem, let $P$ be the largest prime dividing either $m$ or $n$ and observe that this means both $m$ and $n$ fully factor over the set of primes $p$ smaller than $P.$ In particular, let
+\[m=\prod_{p_k<P}p_k^{a_k}\qquad\text{and}\qquad n=\prod_{p_k<P}p_k^{b_k},\]
+where each of $\{a_k\}$ and $\{b_k\}$ may contain 0. Now using the multiplicative nature of $f,$ note
+\[f(m)f(n)=f\Bigg(\prod_{p_k<P}p_k^{a_k}\Bigg)f\Bigg(\prod_{p_k<P}p_k^{b_k}\Bigg)=\prod_{p_k<P}f\left(p_k^{a_k}\right)f\left(p_k^{b_k}\right).\]
+Because we have already shown the statement for prime powers, we know
+\[f(m)f(n)=\prod_{p_k<P}F\left(p_k^{a_k},p_k^{b_k}\right)=F\Bigg(\prod_{p_k<P}a_k^{p_k},\prod_{p_k<P}p_k^{b_k}\Bigg)=F(m,n)\]
+because $F$ is multiplicative, so we are done here.
+\fi
+\end{proof}
+
+Note that statement (a) in Exercise 30 only talks about the behavior of $g$ on primes, so we can always extend it over $\N$ to be completely multiplicative. I.e., given statement (a), we can always construct a completely multiplicative $g$ to satisfy Exercise 31.
+
+\begin{exercise}
+Prove that
+\[\sigma_\alpha(m)\sigma_\alpha(n)=\sum_{d\mid(m,n)}d^\alpha\sigma_\alpha\left(\frac{mn}{d^2}\right).\]
+\end{exercise}
+
+\begin{proof}
+Note that
+\[\sigma_\alpha(p)\sigma_\alpha\left(p^n\right)-p^\alpha\sigma_\alpha\left(p^{n-1}\right)=\left(p^\alpha+1\right)\sum_{k=0}^np^{k\alpha}-\sum_{k=1}^{n}p^{k\alpha}=\sum_{k=1}^{n+1}p^{k\alpha}+\sum_{k=0}^np^{k\alpha}-\sum_{k=1}^np^{k\alpha}=\sigma_\alpha\left(p^{n+1}\right),\]
+so $\sigma_\alpha$ satisfies the condition (a) of Exercise 30 with $g=N^\alpha.$ It follows that Exercise 31 tells us
+\[\sigma_\alpha(m)\sigma_\alpha(n)=\sum_{d\mid(m,n)}d^\alpha\sigma_\alpha\left(\frac{mn}{d^2}\right),\]
+which is exactly what we wanted. Thus, we are done here.
+\end{proof}
+
+\begin{exercise}
+Prove that Liouville's function is given by the formula
+\[\lambda(n)=\sum_{d^2\mid n}\mu\left(\frac n{d^2}\right).\]
+\end{exercise}
+
+\begin{proof}
+With unique prime factorization, let
+\[n=\prod_{k=1}^Np_k^{\alpha_k}=\Bigg(\underbrace{\prod_{k=1}^Np_k^{\floor{\alpha_k/2}}}_a\Bigg)^2\cdot\underbrace{\prod_{k=1}^Np_k^{\alpha_k-2\floor{\alpha_k/2}}}_b=a^2b,\]
+where $b$ is not divisible by the square of any prime and is so squarefree.
+
+Now, for $d^2\mid n,$ note that there exists some $p^2$ dividing $\frac n{d^2}$ iff $a\nmid d.$ Indeed, there is no $p^2$ dividing $\frac n{d^2}$ iff for each prime $p,$
+\[2>\nu_p(n)-2\nu_p(d)=2\big(\nu_p(a)-\nu_p(d)\big)+\nu_p(b).\]
+The above is equivalent to stating $\nu_p(a)-\nu_p(d)\le0$ because otherwise this is at least $2+\nu_p(b)\ge2.$ Thus, $\nu_p(a)\le\nu_p(d),$ so $a\mid d.$ This tells us that $\mu\left(\frac n{d^2}\right)=0$ iff $a\nmid d,$ so we may ignore these divisors in the sum. However, if $d^2>a^2,$ then $\frac{d^2}{a^2}>1,$ so it is divisible by a prime $q,$ and
+\[d^2\mid n^2\implies\frac{d^2}{a^2}\left|\frac{n^2}{a^2}=b\right.\implies q^2\mid b,\]
+which is false by simply considering the prime factorization of $b$; $\nu_q(b)<2.$ Thus, if $d^2\mid n,$ and $\mu\left(\frac n{d^2}\right)$ is nonzero, then $d\mid a^2,$ and $d^2\le a^2,$ so $d=a.$ Thus,
+\[\sum_{d^2\mid n}\mu\left(\frac n{d^2}\right)=\mu\left(\frac n{a^2}\right)\mu(b)=\prod_{k=1}^N(-1)^{\alpha_k-2\floor{\alpha_k/2}}.\]
+To finish off, note that $(-1)^{2\floor{\alpha_k}}=\left((-1)^2\right)^{\floor{\alpha_k/2}}=1,$ so
+\[\sum_{d^2\mid n}\mu\left(\frac n{d^2}\right)=\prod_{k=1}^N(-1)^{\alpha_k}=\lambda(n),\]
+as desired.
+\end{proof}

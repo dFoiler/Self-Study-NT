@@ -1,0 +1,499 @@
+\begin{exercise}
+Use Euler's summation formula to deduce the following for $x\ge2$:
+\begin{enumerate}[label=(\alph*)]
+    \item$\displaystyle\sum_{n\le x}\frac{\log n}n=\frac12(\log x)^2+A+O\left(\frac{\log x}x\right),$ where $A$ is a constant.
+    \item$\displaystyle\sum_{2\le n\le x}\frac1{n\log n}=\log(\log x)+B+O\left(\frac1{x\log x}\right),$ where $B$ is a constant.
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+This is straightforward.
+\begin{enumerate}[label=(\alph*)]
+    \item Note that
+    \begin{align*}
+        \sum_{n\le x}\frac{\log n}n &= \frac{\log1}1+\int_1^x\frac{\log t}tdt+\int_1^x\{t\}\left(\frac{1-\log t}{t^2}\right)dt-\frac{\log x}x\cdot\{x\} \\
+        &= \int_1^x\frac{\log t}tdt+\int_1^x\{t\}\left(\frac{1-\log t}{t^2}\right)dt+O\left(\frac{\log x}x\right).
+    \end{align*}
+    To evaluate the first integral, we apply the substitution $u=\log t$ so that $du=\frac1tdt.$ This gives
+    \[\int_1^x\frac{\log t}tdt=\int_0^{\log x}u\,du=\frac12\left(\log x\right)^2.\]
+    For the second integral, we note this is
+    \[\left|\int_1^x\{t\}\left(\frac{1-\log t}{t^2}\right)dt\right|\le\int_1^x\{t\}\left|\frac{1-\log t}{t^2}\right|dt\le\int_1^x\left|\frac{1-\log t}{t^2}\right|dt.\]
+    For $t\le e,$ $\log t\le1$ so that the quantity is positive, but for $t>e,$ the opposite holds. Thus,
+    \[\left|\int_1^x\{t\}\left(\frac{1-\log t}{t^2}\right)dt\right|\le-\int_1^e\frac{1-\log t}{t^2}dt+\int_e^x\frac{1-\log t}{t^2}dt=O(1)+\frac{\log x}x,\]
+    an $O(1)$ constant, say $A,$ plus $O\left(\frac{\log x}x\right).$ It follows that
+    \[\sum_{n\le x}\frac{\log n}n = \frac12\left(\log x\right)^2+A+O\left(\frac{\log x}x\right),\]
+    so we are done here.
+    \item Let $f(n)=\frac1{n\log n}$ so that $f'(n)=-\frac{1+\log n}{(n\log n)^2}.$ Observe $f'(n)<0$ as long as $1+\log n>0$ as long as $n>\frac1e.$ Because $n\ge2,$ this always holds. Now,
+    \begin{align*}
+        \sum_{2\le n\le x}f(n) &= \int_2^x\frac1{t\log t}dt+\int_2^x\{t\}f'(t)dt-\frac1{x\log x}\cdot\{x\} \\
+        &= \int_2^x\frac1{t\log t}dt+\int_2^x\{t\}f'(t)dt+O\left(\frac1{x\log x}\right).
+    \end{align*}
+    The first integral is
+    \[\int_2^x\frac1{t\log t}dt=\int_{\log 2}^{\log x}\frac1udu=\log(\log x)-\log(\log 2).\]
+    Because $f'(t)<0,$ we can bound the second integral as
+    \[\left|\int_2^x\{t\}f'(t)dt\right|\le-\int_2^x\{t\}f'(t)dt\le-\int_2^xf'(t)dt=f(2)-f(x)=f(2)+O\left(\frac1{x\log x}\right).\]
+    It follows that the integral is some constant, say $B-\log(\log2)$ plus $O\left(\frac1{x\log x}\right).$ It follows that
+    \[\sum_{2\le n\le x}f(n)=\log(\log x)+B+O\left(\frac1{x\log x}\right),\]
+    as desired.
+\end{enumerate}
+Having completed both sides of the problem, we are done here.
+\end{proof}
+
+\begin{exercise}
+If $x\ge2$ prove that
+\[\sum_{n\le x}\frac{d(n)}n=\frac12(\log x)^2+2\gamma\log x+O(1),\text{ where $\gamma$ is Euler's constant.}\]
+\end{exercise}
+
+\begin{proof}
+As usual, note
+\[\sum_{n\le x}\frac{d(n)}n=\sum_{n\le x}\sum_{d\mid n}\frac1n=\sum_{d\le x}\sum_{q\le x/d}\frac1{dq}=\sum_{d\le x}\frac1d\sum_{q\le x/d}\frac1q.\]
+Now, $\sum\frac1q=\log\left(\frac xd\right)+\gamma+O\left(\frac dx\right).$ It follows that
+\[\sum_{n\le x}\frac{d(n)}n=\sum_{d\le x}\frac{\log\left(\frac xd\right)}d+\gamma\sum_{d\le x}\frac1d+\sum_{d\le x}O\left(\frac dx\cdot\frac 1d\right).\]
+
+The first sum is
+\[\sum_{d\le x}\frac{\log\left(\frac xd\right)}d=\log x\sum_{d\le x}\frac1d-\sum_{d\le x}\frac{\log d}d=\log(x)\left(\log x+\gamma+O\left(\frac1x\right)\right)-\frac12(\log x)^2+O(1)\]
+using Exercise 1(a). Note $\log x\cdot O\left(\frac 1x\right)=O\left(\frac{\log x}x\right)=O(1),$ so
+\[\sum_{d\le x}\frac{\log\left(\frac xd\right)}d=\frac12(\log x)^2+\gamma\log x+O(1)\]
+after simplification.
+
+The second sum is
+\[\gamma\sum_{d\le x}\frac1d=\gamma\big(\log x+O(1)\big)=\gamma\log x+O(1),\]
+so the entire thing is
+\[\sum_{n\le x}\frac{d(n)}n=\frac12(\log x)^2+\gamma\log x+O(1)+\gamma\log x+O(1)+O(1)=\frac12(\log x)^2+2\gamma\log x+O(1),\]
+as desired.
+\end{proof}
+
+\begin{exercise}
+If $x\ge2$ and $\alpha>0,$ $\alpha\ne1,$ prove that
+\[\sum_{n\le x}\frac{d(n)}{n^\alpha}=\frac{x^{1-\alpha}\log x}{1-\alpha}+\zeta(\alpha)^2+O\left(x^{1-\alpha}\right).\]
+\end{exercise}
+
+\begin{proof}
+Let the sum be $S.$ As usual,
+\[S=\sum_{n\le x}\frac{d(n)}{n^\alpha}=\sum_{n\le x}\sum_{d\mid n}\frac1{n^{\alpha}}=\sum_{d\le x}\sum_{q\le x/d}\frac1{(dq)^\alpha}=\sum_{d\le x}\frac1{d^\alpha}\sum_{q\le x/d}\frac1{q^\alpha}.\]
+We know that
+\[\sum_{q\le x/d}\frac1{q^\alpha}=\frac{(x/d)^{1-\alpha}}{1-\alpha}+\zeta(\alpha)+O\left((x/d)^{-\alpha}\right),\]
+so we are interested in
+\begin{align*}
+    S &= \frac{x^{1-\alpha}}{1-\alpha}\sum_{d\le x}\frac1{d^\alpha}\cdot\frac1{d^{1-\alpha}}+\zeta(\alpha)\sum_{d\le x}\frac1{d^\alpha}+O\left(x^{-\alpha}\sum_{d\le x}\frac1{d^\alpha}\cdot\frac1{d^{-\alpha}}\right) \\
+    &= \frac{x^{1-\alpha}}{1-\alpha}\sum_{d\le x}\frac1d+\zeta(\alpha)\sum_{d\le x}\frac1{d^\alpha}+O\left(x^{1-\alpha}\right).
+\end{align*}
+
+The first sum is
+\[\frac{x^{1-\alpha}}{1-\alpha}\sum_{d\le x}\frac1d=\frac{x^{1-\alpha}}{1-\alpha}\big(\log x+O(1)\big)=\frac{x^{1-\alpha}\log x}{1-\alpha}+O\left(x^{1-\alpha}\right),\]
+and the second one is
+\[\zeta(\alpha)\sum_{d\le x}\frac1{d^\alpha}=\zeta(\alpha)\left(\frac{x^{1-\alpha}}{1-\alpha}+\zeta(\alpha)+O\left(x^{-\alpha}\right)\right)=\zeta(\alpha)^2+O\left(x^{1-\alpha}\right).\]
+It follows that the entire sum is
+\[S = \frac{x^{1-\alpha}\log x}{1-\alpha}+O\left(x^{1-\alpha}\right)+\zeta(\alpha)^2+O\left(x^{1-\alpha}\right)+O\left(x^{1-\alpha}\right)=\frac{x^{1-\alpha}\log x}{1-\alpha}+\zeta(\alpha)^2+O\left(x^{1-\alpha}\right),\]
+which is exactly what we wanted.
+\end{proof}
+
+The next two problems use the fact that
+\[\sum_{n>0}\frac{\mu(n)}{n^2}=\frac1{\zeta(2)}.\]
+This can be proven by Euler product means, but the rigor is lacking. Note
+\[\sum_{n>0}\frac{\mu(n)}{n^2}=\prod_p\sum_{k=0}^\infty\frac{\mu\left(p^k\right)}{p^{2k}}=\prod_p\left(1-\frac1{p^2}\right)=\prod_p\left(\frac{p^2}{p^2-1}\right)^{-1}.\]
+However,
+\[\zeta(2)=\sum_{n>0}\frac1{n^2}=\prod_p\sum_{k=0}^\infty\frac1{p^{2k}}=\prod_p\frac1{1-\frac1{p^2}}=\prod_p\frac{p^2}{p^2-1},\]
+so plugging in shows the equality.
+
+\begin{exercise}
+If $x\ge2,$ prove that:
+\begin{enumerate}[label=(\alph*)]
+    \item $\displaystyle\sum_{n\le x}\mu(n)\floor{\frac xn}^2=\frac{x^2}{\zeta(2)}+O(x\log x).$
+    \item $\displaystyle\sum_{n\le x}\frac{\mu(n)}n\floor{\frac xn}=\frac x{\zeta(2)}+O(\log x).$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Just chugging along.
+\begin{enumerate}[label=(\alph*)]
+    \item Let the sum be $S.$ Observe that $\floor{\frac xn}^2=\left(\frac xn-\left\{\frac xn\right\}\right)^2=\frac{x^2}{n^2}-2\cdot\frac xn\left\{\frac xn\right\}+\left\{\frac xn\right\}^2.$ Thus,
+    \[S=\sum_{n\le x}\mu(n)\floor{\frac xn}^2=x^2\sum_{n\le x}\frac{\mu(n)}{n^2}-2x\sum_{n\le x}\frac{\mu(n)}n\left\{\frac xn\right\}+\sum_{n\le x}\mu(n)\left\{\frac xn\right\}^2.\]
+    
+    We attack these sums in sequence. The first one is
+    \[\sum_{n\le x}\frac{\mu(n)}{n^2}=\sum_{n>0}\frac{\mu(n)}{n^2}+\sum_{n>x}\frac{\mu(n)}{n^2}=\frac1{\zeta(2)}+O\left(\sum_{n>x}\frac1{n^2}\right)=\frac1{\zeta(2)}+O\left(x^{-1}\right).\]
+    The second sum is bounded by
+    \[\left|\sum_{n\le x}\frac{\mu(n)}n\left\{\frac xn\right\}\right|\le\sum_{n\le x}\frac1n\left\{\frac xn\right\}\le\sum_{n\le x}\frac1n=O(\log x).\]
+    And finally, the last sum is bounded by
+    \[\left|\sum_{n\le x}\mu(n)\left\{\frac xn\right\}^2\right|\le\sum_{n\le x}\left\{\frac xn\right\}^2\le\sum_{n\le x}1=\floor x=O(x).\]
+    Combining these results, we find that
+    \[S=x^2\left(\frac1{\zeta(2)}+O\left(x^{-1}\right)\right)-2x\cdot O(\log x)+O(x)=\frac{x^2}{\zeta(2)}+O(x)+O(x\log x),\]
+    which after noting $O(x)+O(x\log x)=O(x\log x)$ is exactly what we wanted. Thus, we are done here.
+    \item Let the sum be $S.$ Again note $\floor{\frac xn}=\frac xn-\left\{\frac xn\right\}$ so that
+    \[S=\sum_{n\le x}\frac{\mu(n)}n\floor{\frac xn}=x\sum_{n\le x}\frac{\mu(n)}{n^2}-\sum_{n\le x}\frac{\mu(n)}n\left\{\frac xn\right\}.\]
+    From the previous part we note that the first sum is
+    \[\sum_{n\le x}\frac{\mu(n)}{n^2}=\frac1{\zeta(2)}+O\left(x^{-1}\right),\]
+    and the second sum is
+    \[\sum_{n\le x}\frac{\mu(n)}n\left\{\frac xn\right\}=O(\log x).\]
+    Combined, we see that
+    \[S=x\left(\frac1{\zeta(2)}+O\left(x^{-1}\right)\right)-O(\log x)=\frac x{\zeta(2)}+O(1)+O(\log x)=\frac x{\zeta(2)}+O(\log x),\]
+    which is exactly what we wanted.
+\end{enumerate}
+Having completed both parts of the question, we are done here.
+\end{proof}
+
+\begin{exercise}
+If $x\ge1$ prove that:
+\begin{enumerate}[label=(\alph*)]
+    \item$\displaystyle\sum_{n\le x}\phi(n)=\frac12\sum_{n\le x}\mu(n)\floor{\frac xn}^2+\frac12.$
+    \item$\displaystyle\sum_{n\le x}\frac{\phi(n)}n=\sum_{n\le x}\frac{\mu(n)}n\floor{\frac xn}.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+Just keep swimming.
+\begin{enumerate}[label=(\alph*)]
+    \item Let the sum be $S.$ We introduce $\mu$ in the typical way by writing $\phi=\mu*N.$ Note
+    \[S=\sum_{n\le x}\phi(n)=\sum_{n\le x}\sum_{d\mid n}\mu(d)\frac nd=\sum_{d\le x}\mu(d)\sum_{q\le x/d}q.\]
+    The key step here is that the inner sum is now a triangle number. Thus,
+    \[S=\sum_{d\le x}\mu(d)\cdot\frac{\floor{\frac xd}^2+\floor{\frac xd}}2=\frac12\sum_{n\le x}\mu(n)\floor{\frac xn}^2+\frac12\sum_{n\le x}\mu(n)\floor{\frac xn}.\]
+    The second sum is known to be 1, but we can evaluate it by applying the divisor trick in reverse.
+    \[\sum_{n\le x}\mu(n)\floor{\frac xn}=\sum_{d\le x}\mu(d)\sum_{q\le x/d}1=\sum_{x\le n}\sum_{d\mid n}\mu(d)=\sum_{n\le x}I(n)=1\]
+    because $I(n)=1$ if $n=1$ and 0 otherwise. Plugging in this means that
+    \[S=\frac12\sum_{n\le x}\mu(n)\floor{\frac xn}^2+\frac12,\]
+    which is exactly what we wanted.
+    \item Let the sum be $S.$ Again,
+    \[S=\sum_{n\le x}\frac{\phi(n)}n=\sum_{n\le x}\sum_{d\mid n}\mu(d)\frac nd\cdot\frac1n=\sum_{n\le x}\sum_{d\mid n}\frac{\mu(d)}d.\]
+    Transforming the sum gives
+    \[S=\sum_{d\le x}\frac{\mu(d)}d\sum_{q\le x/d}1=\sum_{d\le x}\frac{\mu(d)}d\floor{\frac xd},\]
+    which is what we wanted after replacing each $d$ with $n.$
+\end{enumerate}
+Having completed all parts of the problem, we are done here.
+\end{proof}
+
+The text remarks that ``These formulas, together with those in Exercise 4 show that, for $x\ge2,$
+\[\sum_{n\le x}\phi(n)=\frac12\frac{x^2}{\zeta(2)}+O(x\log x)\text{ and }\sum_{n\le x}\frac{\phi(n)}n=\frac x{\zeta(2)}+O(\log x).\text{''}\]
+
+\begin{exercise}
+If $x\ge2$ prove that
+\[\sum_{n\le x}\frac{\phi(n)}{n^2}=\frac1{\zeta(2)}\log x+\frac{\gamma}{\zeta(2)}-A+O\left(\frac{\log x}x\right),\]
+where $\gamma$ is Euler's constant and
+\[A=\sum_{n=1}^\infty\frac{\mu(n)\log(n)}{n^2}.\]
+\end{exercise}
+
+\begin{proof}
+I can hardly believe I'm seeing $\gamma$ and $\pi$ in the same place. Let the sum be $S,$ and do the usual.
+\[S=\sum_{n\le x}\frac{\phi(n)}{n^2}=\sum_{n\le x}\sum_{d\mid n}\mu(d)\frac nd\cdot\frac1{n^2}=\sum_{n\le x}\sum_{d\mid n}\frac{\mu(d)}d\cdot\frac1n.\]
+Transforming gives
+\[S=\sum_{d\le x}\frac{\mu(d)}d\sum_{q\le x/d}\frac1{dq}=\sum_{d\le x}\frac{\mu(d)}{d^2}\left(\log\left(\frac xd\right)+\gamma+O\left(\frac dx\right)\right).\]
+Splitting apart the sum gives
+\[S=(\log x+\gamma)\sum_{d\le x}\frac{\mu(d)}{d^2}-\sum_{d\le x}\frac{\mu(d)\log d}{d^2}+\sum_{d\le x}\frac{\mu(d)}{d^2}O\left(\frac dx\right).\tag{$*$}\]
+
+Working left to right, the first sum in $(*)$ we know to be $\sum\frac{\mu(d)}{d^2}=\frac1{\zeta(2)}+O\left(x^{-1}\right)$ from Exercise 4(a). The second sum is
+\[\sum_{d\le x}\frac{\mu(d)\log d}{d^2}=\sum_{n>0}\frac{\mu(n)\log n}{n^2}-\sum_{n>x}\frac{\mu(n)\log n}{n^2}.\]
+The first part is $A.$ The second we have to bound. Note
+\[\left|\sum_{n>x}\frac{\mu(n)\log n}{n^2}\right|\le\sum_{n>x}\frac{\log n}{n^2}.\]
+
+I don't actually know how to bound this sum well, but we can do it with the Euler summation formula. Let $f(n)=\frac{\log n}{n^2}$ so that $f'(n)=\frac{1-2\log x}{x^3}$ is always negative with $x\ge2.$ Now,
+\[\sum_{n>x}\frac{\log n}{n^2}=\lim_{N\to\infty}\sum_{x<n\le N}\frac{\log n}{n^2}=\lim_{N\to\infty}\int_x^N\frac{\log t}{t^2}dt+\int_x^N\{t\}f'(t)dt+\{x\}f(x)-\{N\}f(N).\]
+Taking $N$ bigger than $x$ makes both $\{x\}f(x)$ and $\{N\}f(N)$ just $O\left(\frac{\log n}{n^2}\right),$ so we may ignore those terms. The first integral is
+\[\int_x^N\frac{\log t}{t^2}dt=\int_{\log x}^{\log N}ue^{-u}du=\frac{\log x}x-\frac{\log N}N+\int_x^Ne^{-u}du=O\left(\frac{\log x}x\right)+\frac1x-\frac1N\]
+after $u$ substitution and integration by parts. This is $O\left(\frac{\log n}n\right).$ The other integral is negative for $x\ge2,$ so
+\[\left|\int_x^N\{t\}f'(t)dt\right|=-\int_x^N\{t\}f'(t)dt\le-\int_x^Nf'(t)dt=f(x)-f(N)=O\left(\frac{\log n}{n^2}\right).\]
+Combining, we have that
+\[\left|\sum_{n>x}\frac{\mu(n)\log n}{n^2}\right|\le\sum_{n>x}\frac{\log n}{n^2}=O\left(\frac{\log x}x\right)+O\left(\frac{\log x}{x^2}\right)+O\left(\frac{\log x}{x^2}\right)=O\left(\frac{\log x}x\right).\]
+
+Finally, we have to deal with the error term in $(*).$ Note
+\[\sum_{d\le x}\frac{\mu(d)}{d^2}O\left(\frac dx\right)=O\left(\frac1x\sum_{d\le x}\frac{\mu(d)}d\right)=O\left(\frac1x\sum_{d\le x}\frac1d\right)=O\left(\frac{\log x}x\right).\]
+Collecting everything we know into $(*),$ we have
+\[S=\frac{\log x+\gamma}{\zeta(2)}+O\left(\frac{\log x+\gamma}x\right)-A+O\left(\frac{\log x}x\right)+O\left(\frac{\log x}x\right),\]
+which is exactly what we wanted.
+\end{proof}
+
+I can't help but feel like I didn't need to break out Euler's summation formula for the bounding sum $\sum\frac{\log n}{n^2},$ but I've stared at it for too long to have nothing.
+
+\begin{exercise}
+In a later chapter we will prove that $\sum_{n=1}^\infty\mu(n)n^{-\alpha}=1/\zeta(\alpha)$ if $\alpha>1.$ Assuming this, prove that for each $x\ge2$ and $\alpha>1,$ $\alpha\ne2,$ we have
+\[\sum_{n\le x}\frac{\phi(n)}{n^{\alpha}}=\frac{x^{2-\alpha}}{2-\alpha}\frac1{\zeta(2)}+\frac{\zeta(\alpha-1)}{\zeta(\alpha)}+O\left(x^{1-\alpha}\log x\right).\]
+\end{exercise}
+
+\begin{proof}
+Let the sum be $S.$ As usual, we begin by transforming the sum.
+\[S=\sum_{n\le x}\frac{\phi(n)}{n^{\alpha}}=\sum_{n\le x}\sum_{d\mid n}\mu(d)\frac nd\cdot\frac1{n^\alpha}=\sum_{n\le x}\sum_{d\mid n}\mu(d)\frac1d\cdot\frac1{n^{\alpha-1}}.\]
+This means that, unconditional on $\alpha,$ we have that
+\[S=\sum_{d\le x}\sum_{q< x/d}\mu(d)\frac1d\cdot\frac1{(dq)^{\alpha-1}}=\sum_{d\le x}\frac{\mu(d)}{d^\alpha}\sum_{q\le x/d}\frac1{q^{\alpha-1}}.\]
+
+The inner sum is
+\[\sum_{q\le x/d}\frac1{q^{\alpha-1}}=\frac{(x/d)^{2-\alpha}}{2-\alpha}+\zeta(\alpha-1)+O\left((x/d)^{1-\alpha}\right).\]
+Plugging this in, we are interested in
+\[S=\sum_{d\le x}\frac{\mu(d)}{d^\alpha}\frac{(x/d)^{2-\alpha}}{2-\alpha}+\zeta(\alpha-1)\sum_{d\le x}\frac{\mu(d)}{d^\alpha}+\sum_{d\le x}\frac{\mu(d)}{d^\alpha}O\left((x/d)^{1-\alpha}\right).\]
+
+The first sum is simply
+\[\sum_{d\le x}\frac{\mu(d)}{d^\alpha}\frac{(x/d)^{2-\alpha}}{2-\alpha}=\frac{x^{2-\alpha}}{2-\alpha}\sum_{d\le x}\frac{\mu(d)}{d^2}=\frac{x^{2-\alpha}}{2-\alpha}\left(\frac1{\zeta(2)}+O\left(x^{-1}\right)\right)=\frac{x^{2-\alpha}}{2-\alpha}\frac1{\zeta(2)}+O\left(x^{1-\alpha}\right)\]
+using the Exercise 4(a) evaluation of $\sum\frac{\mu(d)}{d^2}.$
+
+The second sum is
+\[\sum_{d\le x}\frac{\mu(d)}{d^\alpha}=\sum_{n>0}\frac{\mu(n)}{n^\alpha}-\sum_{n>x}\frac{\mu(n)}{n^\alpha}=\frac1{\zeta(\alpha)}+O\left(\sum_{n>x}\frac1{n^\alpha}\right)=\frac1{\zeta(\alpha)}+O\left(x^{1-\alpha}\right).\]
+
+Finally, the error term, then, is
+\[\sum_{d\le x}\frac{\mu(d)}{d^\alpha}O\left(\left(\frac xd\right)^{1-\alpha}\right)=O\Bigg(x^{1-\alpha}\sum_{d\le x}\frac1d\Bigg)=O\left(x^{1-\alpha}\log x\right).\]
+
+Combining all of this tells us that
+\begin{align*}
+    S &= \frac{x^{2-\alpha}}{2-\alpha}\frac1{\zeta(2)}+O\left(x^{1-\alpha}\right)+\frac{\zeta(\alpha-1)}{\zeta(\alpha)}+O\left(x^{1-\alpha}\right)+O\left(x^{1-\alpha}\log x\right) \\
+    &= \frac{x^{2-\alpha}}{2-\alpha}\frac1{\zeta(2)}+\frac{\zeta(\alpha-1)}{\zeta(\alpha)}+O\left(x^{1-\alpha}\log x\right),
+\end{align*}
+which is exactly what we wanted.
+\end{proof}
+
+\begin{exercise}
+If $\alpha\le1$ and $x\ge2$ prove that
+\[\sum_{n\le x}\frac{\phi(n)}{n^\alpha}=\frac{x^{2-\alpha}}{2-\alpha}\frac1{\zeta(2)}+O\left(x^{1-\alpha}\log x\right).\]
+\end{exercise}
+
+\begin{proof}
+Let the sum be $S.$ We already know from the previous exercise that
+\[S=\sum_{d\le x}\frac{\mu(d)}{d^\alpha}\sum_{q\le x/d}\frac1{q^{\alpha-1}}.\]
+
+Because $\alpha-1$ is negative, we need to use the Euler summation formula for our error bound. Note
+\[\sum_{n\le x}\frac1{n^{\alpha-1}}=1+\int_1^xt^{1-\alpha}dt+\int_1^x\{t\}\left((1-\alpha)t^{-\alpha}\right)dt+\frac{\{x\}}{x^{\alpha-1}}.\]
+Observe $\alpha-1<0$ means $c=O\left(x^{1-\alpha}\right)$ for any constant $c.$ Because $t^{-\alpha}>0,$ we can write
+\[\sum_{n\le x}\frac1{n^{\alpha-1}}=\int_1^xt^{1-\alpha}dt+(1-\alpha)O\bigg(\int_1^xt^{-\alpha}dt\bigg)+O\left(x^{1-\alpha}\right).\]
+Evaluating the integrals gives
+\[\sum_{n\le x}\frac1{n^{\alpha-1}}=\frac{x^{2-\alpha}}{2-\alpha}-\frac1{2-\alpha}+O\left(\frac{x^{1-\alpha}}{1-\alpha}-\frac1{1-\alpha}\right)+O\left(x^{1-\alpha}\right)=\frac{x^{2-\alpha}}{2-\alpha}+O\left(x^{1-\alpha}\right).\]
+
+Plugging this into the inner sum, we have that
+\[S=\sum_{d\le x}\frac{\mu(d)}{d^\alpha}\frac{(x/d)^{2-\alpha}}{2-\alpha}+\sum_{d\le x}\frac{\mu(d)}{d^\alpha}O\left((x/d)^{1-\alpha}\right).\]
+We have already evaluated both of these sums in the previous exercise, so we know
+\[S=\frac{x^{2-\alpha}}{2-\alpha}+O\left(x^{1-\alpha}\log x\right),\]
+which is exactly what we wanted.
+\end{proof}
+
+\begin{exercise}
+In a later chapter we will prove that the infinite product $\prod_p\left(1-p^{-2}\right),$ extended over all primes, converges to the value $1/\zeta(2)=g/\pi^2.$ Assuming this result, prove that
+\begin{enumerate}[label=(\alph*)]
+    \item$\displaystyle\frac{\sigma(n)}n<\frac n{\phi(n)}<\frac{\pi^2}6\frac{\sigma(n)}n$ if $n\ge2.$
+    
+    [\textit{Hint:} Use the formula $\phi(n)=n\prod_{p\mid n}\left(1-p^{-1}\right)$ and the relation
+    \[1+x+x^2+\cdots=\frac1{1-x}=\frac{1+x}{1-x^2}\text{ with }x=\frac1p.\text]\]
+    \item If $x\ge2$ prove that
+    \[\sum_{n\le x}\frac n{\phi(n)}=O(x).\]
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+This is an interesting problem.
+\begin{enumerate}[label=(\alph*)]
+    \item We begin by noting
+    \[\frac n{\phi(n)}=n\cdot\frac1n\prod_{p\mid n}\frac1{1-p^{-1}}=\prod_{p\mid n}\frac1{1-p^{-1}}.\]
+    For the left-hand side, we note $n=\prod_{p\mid n}p^{\nu_p(n)}$ so that, as long as $n>1$ and has a prime factor,
+    \[\frac{\sigma(n)}n=\prod_{p\mid n}\frac1{p^{\nu_p(n)}}\sum_{k=0}^{\nu_p(n)}p^k=\prod_{p\mid n}\sum_{k=0}^{\nu_p(n)}p^{-k}<\prod_{p\mid n}\sum_{k=0}^\infty p^{-k}=\prod_{p\mid n}\frac1{1-p^{-1}}=\frac n{\phi(n)}.\]
+    To introduce $\zeta(2)$ into the party, we masssage our $\frac{\sigma(n)}n$ bound as
+    \[\frac{\sigma(n)}n=\prod_{p\mid n}\sum_{k=0}^{\nu_p(n)}p^{-k}>\prod_{p\mid n}1+p^{-1}=\prod_{p\mid n}\left(1+p^{-2}\right)\cdot\frac1{1-p^{-1}}\]
+    as long as $n>1$ and has a prime factor. This now splits as
+    \[\frac{\sigma(n)}n>\prod_{p\mid n}\left(1-p^{-2}\right)\prod_{p\mid n}\frac1{1-p^{-1}}>\prod_p\left(1-p^{-2}\right)\prod_{p\mid n}\frac1{1-p^{-1}}=\frac1{\zeta(2)}\frac{\phi(n)}n.\]
+    It follows that
+    \[\frac{\phi(n)}n<\zeta(2)\frac{\sigma(n)}n=\frac{\pi^2}6\frac{\sigma(n)}n,\]
+    which is the right-hand side. Having shown both inequalities, we are done here.
+    \item Observe that $\frac n{\phi(n)}>0$ always, so it suffices to find an upper bound. I.e., $\left|\sum\frac n{\phi(n)}\right|=\sum\frac n{\phi(n)}.$ Now,
+    \[\sum_{n\le x}\frac n{\phi(n)}<\zeta(2)\sum_{n\le x}\frac{\sigma(n)}n,\]
+    using part (a), so we may just bound $\sum\frac{\sigma(n)}n.$ Using standard tricks, note $\sigma=N*u,$ so
+    \[\sum_{n\le x}\frac{\sigma(n)}n=\sum_{n\le x}\sum_{d\mid n}\frac dn=\sum_{d\le x}\sum_{q\le x/d}\frac1q.\]
+    Evaluating the inner sum,
+    \[\sum_{n\le x}\frac{\sigma(n)}n=\sum_{d\le x}\log\left(\frac xd\right)+O(1)=\floor x\log x-\sum_{d\le x}\log d+O(x).\]
+    
+    We use the Euler summation formula. Letting $f(n)=\log n,$ we know $f'(n)=\frac1n$ so that
+    \[\sum_{n\le x}\log n=\int_1^x\log t\,dt+\int_1^x\frac{\{t\}}tdt+\{x\}\log x.\]
+    Integrating by parts,
+    \[\sum_{n\le x}\log n=x\log x+\int_1^x\frac{\{t\}}tdt+O(x).\]
+    For the integral, we note that the quantity is always positive, so
+    \[\left|\int_1^x\frac{\{t\}}tdt\right|=\int_1^x\frac{\{t\}}tdt\le\int_1^x\frac1tdt=\log x,\]
+    so the entire quantity is $O(\log x).$ It follows that
+    \[\sum_{n\le x}\log n=x\log x+O(x)\]
+    because $O(\log x)=O(x).$ Plugging this in gives
+    \[\sum_{n\le x}\frac{\sigma(n)}n=(\floor x-x)\log x+O(x)+O(x)=O(\log x)+O(x)=O(x).\]
+    It follows that $\sum\frac n{\phi(n)}=O(x),$ so we are done here.
+\end{enumerate}
+Having completed all parts of the problem, we are done here.
+\end{proof}
+
+Sharpening the error, we can show that $\sum\log n=x\log x-x+O(\log x),$ but after looking for about a minute, I haven't found a way to do better than $O(x).$
+
+\begin{exercise}
+If $x\ge2$ prove that
+\[\sum_{n\le x}\frac1{\phi(n)}=O(\log x).\]
+\end{exercise}
+
+\begin{proof}
+We will do as Exercise 9(b). Note $\frac1{\phi(n)}>0,$ so $\left|\sum\frac1{\phi(n)}\right|=\sum\frac1{\phi(n)},$ so to suffices to upper-bound the sum. By Exercise 9(a), we have
+\[\sum_{n\le x}\frac1{\phi(n)}<\zeta(2)\sum_{n\le x}\frac{\sigma(n)}{n^2},\]
+so it we can just bound $\sum\frac{\sigma(n)}{n^2}$ instead. Using standard tricks,
+\[\sum_{n\le x}\frac{\sigma(n)}{n^2}=\sum_{n\le x}\sum_{d\mid n}\frac d{n^2}=\sum_{d\le x}\sum_{q\le x/d}\frac1{dq^2}=\sum_{d\le x}\frac1d\sum_{q\le x/d}\frac1{q^2}.\]
+We know that the inner sum is
+\[\sum_{q\le x/d}\frac1{q^2}=\zeta(2)+O\left((x/d)^{-1}\right)=O(1)\]
+because the infinite sum converges. Thus,
+\[\sum_{n\le x}\frac{\sigma(n)}{n^2}=\sum_{d\le x}\frac1dO(1)=O\Bigg(\sum_{d\le x}\frac1d\Bigg)=O(\log x).\]
+It follows that $\sum\frac1{\phi(n)}=O\left(\sum\frac{\sigma(n)}{n^2}\right)=O(\log x),$ so we are done here.
+\end{proof}
+
+\begin{exercise}
+Let $\phi_1(n)=n\sum_{d\mid n}|\mu(d)|/d.$
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that $\phi_1$ is multiplicative and that $\phi_1(n)=n\prod_{p\mid n}\left(1+p^{-1}\right).$
+    \item Prove that
+    \[\phi_1(n)=\sum_{d^2\mid n}\mu(d)\sigma\left(\frac n{d^2}\right)\]
+    where the sum is over those divisors of $n$ for which $d^2\mid n.$
+    \item Prove that
+    \[\sum_{n\le x}\phi_1(n)=\sum_{d\le\sqrt x}\mu(d)S\left(\frac x{d^2}\right),\text{ where }S(x)=\sum_{k\le x}\sigma(k),\]
+    then use Theorem 3.4 to deduce that, for $x\ge2,$
+    \[\sum_{n\le x}\phi_1(n)=\frac{\zeta(2)}{2\zeta(4)}x^2+O(x\log x).\]
+    As in Exercise 7, you may assume the result $\sum_{n=1}^\infty\mu(n)n^{-\alpha}=1/\zeta(\alpha)$ for $\alpha>1.$
+\end{enumerate}
+\end{exercise}
+
+\begin{proof}
+This should be interesting.
+\begin{enumerate}[label=(\alph*)]
+    \item Note that $|\mu|=\mu^2$ because $\mu\in\{-1,0,1\},$ so $\mu^2$ is multiplicative. So noting that
+    \[\phi_1(n)=\sum_{d\mid n}\mu(d)^2\frac nd=\left(\mu^2*N\right)(n)\]
+    is enough to conclude that $\phi_1$ is multiplicative. The formula is fastest shown by noting both sides are multiplicative and then using prime powers, but we can also just push the original proof for $\phi.$ Let the set of primes dividing $n$ be $P$ so that we can expand as
+    \[n\prod_{p\in P}\left(1+\frac1p\right)=n\sum_{S\subseteq P}\prod_{p\not\in S}1\prod_{p\in S}\frac1p=n\sum_{S\subseteq P}\prod_{p\in S}\frac1p.\]
+    Now note that every $S\subseteq P$ can be described by the squarefree factors of $n$ by taking the product of all elements of $S$ to get some unique $d\mid n.$ And the converse also holds: Every squarefree $d\mid n$ can be prime-factored into subset of primes $S\subseteq P.$ Thus, we can reparameterize this as
+    \[n\prod_{p\in P}\left(1+\frac1p\right)=n\sum_{\substack{d\mid n\\d\text{ squarefree}}}\frac1d.\]
+    Because $\mu(d)^2=1$ if $d$ is squarefree and 0 otherwise, we loop over all of the divisors weighted by $\mu^2.$
+    \[n\prod_{p\in P}\left(1+\frac1p\right)=n\sum_{d\mid n}\frac{\mu(d)^2}d=\phi_1(n),\]
+    which is exactly what we wanted.
+    \item We already know $\phi_1$ is multiplicative, so we might as well show the sum is multiplicative and then show that the functions agree on prime powers.
+    
+    If $(n,m)=1$ are integers, then we are interested in
+    \[\sum_{d^2\mid mn}\mu(d)\sigma\left(\frac{mn}{d^2}\right).\]
+    We know that for $d\mid mn,$ we can $d=d_1d_2$ so that $d_1\mid m$ and $d_2\mid n.$ (E.g., take the gcd.) So if $d^2\mid mn,$ split as $d^2=d_1d_2$ with $d_1\mid m$ and $d_2\mid n.$ If either $d_1$ or $d_2$ are not squares, say $d_k,$ then there exists some prime $p$ with $\nu_p(d_k)$ is odd. However, because
+    \[\nu_p(d_k)+\nu_p(d_\ell)=\nu_p\left(d^2\right)=2\nu_p(d),\]
+    we see that $\nu_p(d_\ell)$ is also odd and therefore nonzero, so $p$ divides into $d_k$ and $d_\ell,$ so $p$ divides into $m$ and $n,$ violating $(m,n)=1.$ Thus, $d_1=a^2$ and $d_2=b^2$ are both coprime squares. Thus, we write
+    \[\sum_{d^2\mid nm}\mu(d)\sigma\left(\frac{mn}{d^2}\right)=\sum_{\substack{a^2\mid m\\b^2\mid n}}\mu(ab)\sigma\left(\frac{mn}{a^2b^2}\right)=\sum_{a^2\mid m}\mu(a)\sigma\left(\frac m{a^2}\right)\cdot\sum_{b^2\mid n}\mu(b)\sigma\left(\frac n{b^2}\right),\]
+    which shows that the sum is multiplicative.
+    
+    Now for prime powers, note that for $p^k>1$ a prime power, $\phi_1\left(p^k\right)=p^k\left(1+\frac1p\right)=p^k+p^{k-1}.$ As for the sum,
+    \[\sum_{d^2\mid p^k}\mu(d)\sigma\left(\frac{p^k}d\right)=\begin{cases}\mu(1)\sigma(p)&k=1 \\ \mu(1)\sigma\left(p^k\right)+\mu(p)\sigma\left(p^{k-2}\right) & k>1\end{cases}.\]
+    For $k=1,$ that is $p+1,$ but for $k>1,$ that is $\sigma\left(p^k\right)-\sigma\left(p^{k-2}\right),$ which is the sum of the divisors of $p^k$ minus those which divide $p^{k-2}.$ Of course, this is just $p^k+p^{k-1},$ so
+    \[\sum_{d^2\mid p^k}\mu(d)\sigma\left(\frac{p^k}d\right)=p^k+p^{k-1}=\phi_1\left(p^k\right)\]
+    in all cases, so we are done here.
+    \item As usual, we just reparameterize the sum in terms of $d.$ Let the sum be $S,$ and note
+    \[S=\sum_{n\le x}\phi_1(x)=\sum_{n\le x}\sum_{d^2\mid n}\mu(d)\sigma\left(\frac n{d^2}\right)=\sum_{d^2\le x}\sum_{q\le x/d^2}\mu(d)\sigma(q).\]
+    Rearranged, this is
+    \[S=\sum_{d^2\le x}\mu(d)\sum_{q\le x/d^2}\sigma(q)=\sum_{d\le\sqrt x}\mu(d)S\left(\frac x{d^2}\right)\]
+    in the notation of the problem. This is the first claim.
+    
+    Theorem 3.4 states that $S(x)=\frac12\zeta(2)x^2+O(x\log x),$ which once we plug in is
+    \[S=\frac12\zeta(2)x^2\sum_{d\le\sqrt x}\mu(d)\left(\frac1{d^2}\right)^2+\sum_{d\le\sqrt x}\mu(d)O\left(\frac x{d^2}\log\frac x{d^2}\right).\]
+    The first sum evaluates as
+    \[\sum_{d\le\sqrt x}\mu(d)\left(\frac1{d^2}\right)^2=\sum_{d\le\sqrt x}\frac{\mu(d)}{d^4}=\sum_{d>0}\frac{\mu(d)}{d^4}+\sum_{d>\sqrt x}\frac{\mu(d)}{d^4}=\frac1{\zeta(4)}+O\left(\left(\sqrt x\right)^{1-4}\right).\]
+    The error term here is $O\left(x^{-3/2}\right).$ Now, the second sum is
+    \[\sum_{d\le\sqrt x}\mu(d)O\left(\frac x{d^2}\log\frac x{d^2}\right)=O\Bigg(\sum_{d\le\sqrt x}\frac x{d^2}\log\frac x{d^2}\Bigg).\]
+    This bounding sum expands into
+    \[x\log x\sum_{d\le\sqrt x}\frac1{d^2}-2x\sum_{d\le\sqrt x}\frac{\log d}{d^2}=O(x\log x)+O(x)=O(x\log x)\]
+    because both sums converge to an $O(1)$ value.
+    
+    Plugging this in, we find
+    \[S=\frac{\zeta(2)}{2\zeta(4)}x^2+O\left(x^{1/2}\right)+O(x\log x)=\frac{\zeta(2)}{2\zeta(4)}x^2+O(x\log x),\]
+    which is exactly what we wanted.
+\end{enumerate}
+Having completed all parts of the problem, we are done here.
+\end{proof}
+
+\begin{exercise}
+For real $s>0$ and integer $k\ge1$ find an asymptotic formula for the partial sums
+\[\sum_{\substack{n\le x\\(n,k)=1}}\frac1{n^s}\]
+with an error term that tends to $0$ as $x\to\infty.$ Be sure to include the case $s=1.$
+\end{exercise}
+
+\begin{proof}
+The key idea in this problem is to move the $(n,k)=1$ condition out of the sum by weighting the terms by $I\big((n,k)\big).$ Then standard tricks work. Let the sum be $S(x,s)$ so that
+\[S(x,s)=\sum_{\substack{n\le x\\(n,k)=1}}\frac1{n^s}=\sum_{n\le x}\frac{I\big((n,k)\big)}{n^s}=\sum_{n\le x}\sum_{d\mid(n,k)}\frac{\mu(d)}{n^s}.\]
+We now split the $d\mid(n,k)$ condition into $d\mid n$ and $d\mid k.$ The latter condition can be moved outside when we reparamterize.
+\[S(x,s)=\sum_{n\le x}\sum_{\substack{d\mid n\\d\mid k}}\frac{\mu(d)}{n^s}=\sum_{d\mid k}\sum_{q\le x/d}\frac{\mu(d)}{(dq)^s}.\]
+Notice that we have removed the typical $d\le x$ condition because this just turns the inner sum to 0, and the sum is already finite. With that said, this is
+\[S(x,s)=\sum_{d\mid k}\frac{\mu(d)}{d^s}\sum_{q\le x/d}\frac1{q^s}.\tag{$*$}\]
+Here we have to split this into two cases. But before continuing, it will become useful to note that
+\[\sum_{d\mid k}\frac{\mu(d)}d=\frac1k\sum_{d\mid k}\mu(d)\frac kd=\frac{\phi(k)}k.\]
+
+If $s=1,$ then the inner sum in $(*)$ behaves like $\log x+\gamma+O\left(\frac1x\right),$ so this is
+\[S(x,1)=(\log x+\gamma)\sum_{d\mid k}\frac{\mu(d)}d+\sum_{d\mid k}\frac{\mu(d)}dO\left(\frac dx\right)=\frac{\phi(k)}k(\log x+\gamma)+O\Bigg(\frac1x\sum_{d\mid k}\frac1d\cdot d\Bigg).\]
+The error sum is finite and not dependent on $x,$ so it's an $O(1)$ problem. Thus,
+\[\boxed{S(x,1)=\frac{\phi(k)}k(\log x+\gamma)+O\left(x^{-1}\right)},\]
+as desired.
+
+Otherwise $s\ne1.$ Now, the inner sum in $(*)$ behaves like $\frac{x^{1-s}}{1-s}+\zeta(s)+O\left(x^{-s}\right),$ so
+\[S(x,s)=\sum_{d\mid k}\frac{\mu(d)}{d^s}\cdot\frac{(x/d)^{1-s}}{1-s}+\zeta(s)\sum_{d\mid k}\frac{\mu(d)}{d^s}+\sum_{d\mid k}\frac{\mu(d)}{d^s}\cdot O\left((x/d)^{-s}\right).\]
+Moving in sequence, the first sum is
+\[\sum_{d\mid k}\frac{\mu(d)}{d^s}d\cdot\frac{(x/d)^{1-s}}{1-s}=\frac{x^{1-s}}{1-s}\sum_{d\mid k}\frac{\mu(d)}d=\frac{\phi(k)}k\cdot\frac{x^{1-s}}{1-s}.\]
+The second sum is already a constant with respect to $x,$ so we ignore it. Finally, the error sum is
+\[\sum_{d\mid k}\frac{\mu(s)}{d^s}O\left(\frac{d^s}{x^s}\right)=O\Bigg(x^{-s}\sum_{d\mid k}1\Bigg).\]
+The inner bounding sum is a constant, so in total this error is $O\left(x^{-s}\right).$ It follows that
+\[\boxed{S(x,s)=\frac{\phi(k)}k\cdot\frac{x^{1-s}}{1-s}+\zeta(s)\sum_{d\mid k}\frac{\mu(d)}{d^s}+O\left(x^{-s}\right)\text{ for }s\ne1}.\]
+
+Having covered all cases, we are done here.
+\end{proof}
+
+The remaining exercises concern themselves with the floor function, which I find only mildly interesting, so I do very few of them.
+
+\begin{exercise}[17]
+Prove that $\floor x+\floor{x+\textstyle\frac12}=\floor{2x}$ and, more generally,
+\[\sum_{k=0}^{n-1}\floor{x+\frac kn}=\floor{nx}.\]
+\end{exercise}
+
+\begin{proof}
+As usual, we begin by decomposing this into fractional parts. This is the same as saying
+\[\sum_{k=0}^{n-1}\left(x+\frac kn\right)-\sum_{k=0}^{n-1}\left\{x+\frac kn\right\}=nx-\{nx\},\]
+which becomes
+\[\{nx\}+\sum_{k=0}^{n-1}\frac kn=\sum_{k=0}^{n-1}\left\{x+\frac kn\right\}\]
+after cancellation.
+
+The key observation is that for integer $\ell,$
+\[\sum_{k=0}^{n-1}\left\{\frac{k+\ell}n\right\}=\sum_{k=\ell}^{n+\ell-1}\left\{\frac kn\right\}=\sum_{k=\ell}^{n+\ell-1}\left\{\frac{k\pmod n}n\right\}=\sum_{k=0}^{n-1}\left\{\frac{k\pmod n}n\right\}=\sum_{k=0}^{n-1}\frac kn\]
+because the sum loops over all possible integer remainders$\pmod n.$ With this in mind, we write $x=\frac{nx}n$ so that
+\[\sum_{k=0}^{n-1}\left\{x+\frac kn\right\}=\sum_{k=0}^{n-1}\left\{\frac{\{nx\}}n+\frac{k+\floor{nx}}n\right\}=\sum_{k=0}^{n-1}\left\{\frac{\{nx\}}n+\frac{k+\floor{nx}\pmod n}n\right\}.\]
+However, for integer $\ell\in[0,n-1),$ we have
+\[\frac{\{nx\}}n+\frac\ell n<\frac1n+\frac{n-1}n=1,\]
+so we may split the fractional part here as
+\[\sum_{k=0}^{n-1}\left\{x+\frac kn\right\}=\sum_{k=0}^{n-1}\left\{\frac{\{nx\}}n\right\}+\sum_{k=0}^{n-1}\left\{\frac{k+\floor{nx}}n\right\}=n\left\{\frac{\{nx\}}n\right\}+\sum_{k=0}^{n-1}\left\{\frac{k+\floor{nx}}n\right\}.\]
+
+Thus, we want
+\[\{nx\}+\sum_{k=0}^{n-1}\frac kn=n\left\{\frac{\{nx\}}n\right\}+\sum_{k=0}^{n-1}\left\{\frac{k+\floor{nx}}n\right\}.\]
+We already know that $\sum\frac kn=\sum\left\{\frac{k+\floor{nx}}m\right\}$ from the key observation. Cancelling these implies that we want
+\[\{nx\}=n\left\{\frac{\{nx\}}n\right\}\iff\frac{\{nx\}}n=\left\{\frac{\{nx\}}n\right\}\]
+However, notice that $\left\{\frac{\{nx\}}n\right\}<\frac 1n\le1,$ so it follows that the fractional part of $\frac{\{nx\}}n$ is itself, which is exactly what we wanted. Thus, we are done here.
+\end{proof}
+
+\begin{exercise}[21]
+Determine all positive integers $n$ such that $\floor{\sqrt n}$ divides $n.$
+\end{exercise}
+
+\begin{proof}
+I like the flavor of olympiad. Let $n=a^2+b$ where $a=\floor{\sqrt n}.$ Note that $0\le b<2a+1$ because if $n\ge a^2+2a+1,$ then $n\ge(a+1)^2,$ so $\floor{\sqrt n}=a+1,$ which is false. Thus, we need
+\[a\mid a^2+b\iff a\mid b\]
+where $0\le b<2a+1.$ The only multiples of $a$ available are $0,\,a,\,$ and $2a,$ so our solution set is $\boxed{a^2,\,a^2+a,\,a^2+2a}$ for nonnegative integers $a.$
+\end{proof}
+
+\begin{exercise}[23]
+Prove that
+\[\sum_{n\le x}\lambda(n)\floor{\frac xn}=\floor{\sqrt x}.\]
+\end{exercise}
+
+\begin{proof}
+The idea is to use the divisor parameterization in reverse. Let the sum be $S$, and note
+\[S=\sum_{n\le x}\lambda(n)\floor{\frac xn}=\sum_{n\le x}\sum_{q\le x/n}\lambda(n).\]
+This looks like we can should relabel $n$ as $d$ so that
+\[S=\sum_{d\le x}\sum_{q\le x/n}\lambda(d)=\sum_{n\le x}\sum_{d\mid n}\lambda(d).\]
+However, we already know the inner sum is $\lambda*u,$ the square indicator; i.e., it is 1 if $n$ is square and 0 otherwise. It follows that the inner sum is equal to the number of squares less than or equal to $x,$ which is $\floor{\sqrt x}.$
+\end{proof}
+
+\begin{exercise}
+Prove that
+\[\sum_{n\le x}\floor{\sqrt{\frac xn}}=\sum_{n\le\sqrt x}\floor{\frac x{n^2}}.\]
+\end{exercise}
+
+\begin{proof}
+I might as well include a nontrivial lattice-point problem. Relabeling, it suffices to show
+\[\sum_{x\le N}\floor{\sqrt{\frac Nx}}=\sum_{y\le\sqrt N}\floor{\frac N{y^2}}.\]
+
+First, we claim the left-hand side is the number of lattice points below $y=\sqrt{\frac Nx}$ in the first quadrant. Indeed, for any particular $x_0,$ we see that
+\[\floor{\sqrt{\frac N{x_0}}}\]
+is the number of lattice points below $y=\sqrt{\frac Nx}$ satisfying $x=x_0.$ Because $\sqrt{\frac Nx}<1$ if and only if $x>N,$ all lattice points will exist between $x=1$ and $x=N,$ hence the bounds on the left-hand side.
+
+Second, we claim that right-hand side is the number of lattice points to the left of $x=\frac N{y^2}$ in the first quadrant. Indeed, for any particular, $y_0,$ we see that
+\[\floor{\frac N{{y_0}^2}}\]
+is the number of lattice points to the left of $x=\frac N{y^2}$ going up to the $y$ axis. Because $\frac N{y^2}<1$ if and only if $y>\sqrt N$ for $y>0,$ all lattice points will exist between $y=1$ and $y=\sqrt N,$ hence the bounds on the right-hand side.
+
+Finally, because $y=\sqrt{\frac Nx}$ and $x=\frac N{y^2}$ describe the same curve, both sides of the equation describe the same number of lattice points in the first quadrant. Thus, we are done here.
+\end{proof}
